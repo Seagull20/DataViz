@@ -148,21 +148,26 @@ void ParentWindow::on_actionFunction_triggered()
     FunctionDialog* Function_dlg=new FunctionDialog(AllDataSets,this);
     Function_dlg->exec();
 
-    // Create a new dataset from the computed expression
-    DataSet *AddedDataSet = new DataSet(Function_dlg->getResult());
+    //check if the new DataSet contains elements
+    if(!Function_dlg->getResult().isEmpty()){
+        // Create a new dataset from the computed expression
+        DataSet *AddedDataSet = new DataSet(Function_dlg->getResult());
 
+        AllDataSets.push_back(AddedDataSet); // Addding a pointer to the new dataset so that it can be accessed by the rest of the app
 
-    AllDataSets.push_back(AddedDataSet); // Addding a pointer to the new dataset so that it can be accessed by the rest of the app
+        // Main menu actions for plotting new dataset
+        actionXY_Plot = new QAction("Dataset \""+AddedDataSet->getName()+"\"", this);
+        ui->menuXY_Plot->addAction(actionXY_Plot);
+        connect(actionXY_Plot, SIGNAL(triggered()), this, SLOT(PlotXYData()));
 
-    // Main menu actions for plotting new dataset
-    actionXY_Plot = new QAction("Dataset \""+AddedDataSet->getName()+"\"", this);
-    ui->menuXY_Plot->addAction(actionXY_Plot);
-    connect(actionXY_Plot, SIGNAL(triggered()), this, SLOT(PlotXYData()));
+        // Create a subWindow for the loaded DataSet
+        AddedDataSetWindow=new DataSetWindow(AddedDataSet,this);
+        subWindow=ui->WindowsManager->addSubWindow(AddedDataSetWindow);
+        AddedDataSetWindow->show(); // showing the new dataset window to the user (when it is added for the first time)
+    }else{
+        this->displayErrorDialog(8); //this error showing no dataset found or empty Result returned
+    }
 
-    // Create a subWindow for the loaded DataSet
-    AddedDataSetWindow=new DataSetWindow(AddedDataSet,this);
-    subWindow=ui->WindowsManager->addSubWindow(AddedDataSetWindow);
-    AddedDataSetWindow->show(); // showing the new dataset window to the user (when it is added for the first time)
 
 
     // To enable the ParentWindow to plot the dataset when the user clicks on a plot option in the context menu

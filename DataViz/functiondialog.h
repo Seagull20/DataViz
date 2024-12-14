@@ -49,7 +49,7 @@ private slots:
 
 private:
     Ui::FunctionDialog *ui;
-    QList<DataSet *> dataBase;
+    QList<DataSet *> dataBases;
     ATMSP<double> ParserObj;
     ATMSB<double> ByteCodeObj;
     QVector<QPointF> result;

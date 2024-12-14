@@ -43,6 +43,8 @@ QString ErrorDialog::getErrorDetails(int errCode)
             return "A value (1-100) must be entered for the number of bins.\n\nHistogram has not been created. Please try again.";
         case 7:
             return "Function analysis requires use of 2 seperate datasets. Make sure you have entered the correct dataset names\n\nOperation has been cancelled. Please try again.";
+        case 8:
+            return "No Dataset Found! Please check your experssion";
         default:
             return "Valid error code not received.";
     }

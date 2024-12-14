@@ -6,7 +6,7 @@ FunctionDialog::FunctionDialog(QList<DataSet *> list,QWidget *parent) :
     ui(new Ui::FunctionDialog)
 {
     ui->setupUi(this);
-    dataBase = list;
+    dataBases = list; //load Alldatasets from "parentwindow"
     this->setWindowTitle("Mathematical Function");
 }
 
@@ -64,7 +64,7 @@ void FunctionDialog::on_buttonBox_accepted()
     QVector<QVector<QPointF>> dataPoints;
 
     // Check if an expression as been entered and that the dataset it contains do exist
-    if (!expression.isEmpty() && !dataBase.isEmpty())
+    if (!expression.isEmpty() && !dataBases.isEmpty())
     {
         expStr = expression.toStdString(); // Convert the expression to standard C++ string datatype.
         valid = ParserObj.parse(ByteCodeObj, expStr, generateVar(names).toStdString()); // Convert the expression to a mathematical operation.
@@ -76,12 +76,12 @@ void FunctionDialog::on_buttonBox_accepted()
             while (index < names.size() && !isEmpty)
             {
                 // Obtain every individual datapoint for the given dataset
-                dataPoints.append(getDataSet(names[index], dataBase));
-
+                dataPoints.append(getDataSet(names[index], dataBases));
                 // Verify that all datasets have data in them
                 if (dataPoints[index].isEmpty())
                 {
                     isEmpty = true; // Stop the operation if datapoints are not available
+
                 }
 
                 index++; // Go to the next dataset.
