@@ -29,6 +29,7 @@ private:
     gsl_matrix *Matrix; // GSL Matrix object to store the data
     static int DataSetCounter; // Number of Datasets in the app at any moment ( defined as static because it is shared among all objects of this class)
     QString DataSetName; // Name of the Dataset
+    QString description;
 
 public:
     DataSet(QString& FileName); // Create a new dataset by loading a file
@@ -36,6 +37,9 @@ public:
     int Size(); // function to get the size of the dataset (currenlty the number of rows only)
     QString getName(); // Function to get the name of the dataset
     void setName(QString* name);
+
+    void setDescription(QString* newDescription);
+    QString getDescription() const;
     double* getPoint(int i); // Function to return the ith datapoint
 
     bool IsDataSetValid=true; // Used to detect and handle error subsquently

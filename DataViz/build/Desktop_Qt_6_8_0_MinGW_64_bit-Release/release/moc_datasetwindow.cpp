@@ -48,7 +48,8 @@ constexpr auto qt_meta_stringdata_CLASSDataSetWindowENDCLASS = QtMocHelpers::str
     "Open_HistPlotDialog",
     "displayChangeDataSetNameDialog",
     "receiveNewDataSetName",
-    "QString*"
+    "QString*",
+    "receiveNewDataSetDescription"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -61,7 +62,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSDataSetWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -69,16 +70,17 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSDataSetWindowENDCLASS[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   62,    2, 0x06,    1 /* Public */,
-       5,    1,   65,    2, 0x06,    3 /* Public */,
-       7,    1,   68,    2, 0x06,    5 /* Public */,
-       8,    0,   71,    2, 0x06,    7 /* Public */,
+       1,    1,   68,    2, 0x06,    1 /* Public */,
+       5,    1,   71,    2, 0x06,    3 /* Public */,
+       7,    1,   74,    2, 0x06,    5 /* Public */,
+       8,    0,   77,    2, 0x06,    7 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       9,    0,   72,    2, 0x0a,    8 /* Public */,
-      10,    0,   73,    2, 0x0a,    9 /* Public */,
-      11,    0,   74,    2, 0x0a,   10 /* Public */,
-      12,    1,   75,    2, 0x0a,   11 /* Public */,
+       9,    0,   78,    2, 0x0a,    8 /* Public */,
+      10,    0,   79,    2, 0x0a,    9 /* Public */,
+      11,    0,   80,    2, 0x0a,   10 /* Public */,
+      12,    1,   81,    2, 0x0a,   11 /* Public */,
+      14,    1,   84,    2, 0x0a,   13 /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -90,6 +92,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSDataSetWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 13,    2,
     QMetaType::Void, 0x80000000 | 13,    2,
 
        0        // eod
@@ -123,6 +126,9 @@ Q_CONSTINIT const QMetaObject DataSetWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'receiveNewDataSetName'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString *, std::false_type>,
+        // method 'receiveNewDataSetDescription'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString *, std::false_type>
     >,
     nullptr
@@ -142,6 +148,7 @@ void DataSetWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 5: _t->Open_HistPlotDialog(); break;
         case 6: _t->displayChangeDataSetNameDialog(); break;
         case 7: _t->receiveNewDataSetName((*reinterpret_cast< std::add_pointer_t<QString*>>(_a[1]))); break;
+        case 8: _t->receiveNewDataSetDescription((*reinterpret_cast< std::add_pointer_t<QString*>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -196,13 +203,13 @@ int DataSetWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 9)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 8;
+        _id -= 9;
     }
     return _id;
 }

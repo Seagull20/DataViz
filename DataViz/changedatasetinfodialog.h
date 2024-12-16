@@ -37,6 +37,7 @@ private:
 
 signals:
     void sendNewDataSetName_SIGNAL(QString*);
+    void sendNewDataSetDescription_SIGNAL(QString*);
 };
 
 #endif // CHANGEDATASETINFODIALOG_H

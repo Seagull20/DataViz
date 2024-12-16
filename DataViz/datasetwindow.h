@@ -34,6 +34,7 @@ public:
     ~DataSetWindow();
     void contextMenuEvent(QContextMenuEvent *event);
     void ConstructContextMenu(QMenu *);
+    DataSet* getDisplayedDataSet();
 
 
 public slots:
@@ -41,6 +42,7 @@ public slots:
     void Open_HistPlotDialog();
     void displayChangeDataSetNameDialog();
     void receiveNewDataSetName(QString*);
+    void receiveNewDataSetDescription(QString*);
 
 
 signals:

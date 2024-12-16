@@ -112,6 +112,16 @@ void DataSet::setName(QString* name)
     DataSetName = *name;
 }
 
+void DataSet::setDescription(QString *newDescription)
+{
+    description = *newDescription;
+}
+
+QString DataSet::getDescription() const
+{
+    return description;
+}
+
 double *DataSet::getPoint(int i)
 { // Function to return the ith datapoint
     DataPoint[0]= gsl_matrix_get(Matrix,i,0); // x-coordinate

@@ -89,6 +89,12 @@ void DataSetWindow::ConstructContextMenu(QMenu *)
     ContextMenu->addAction(actionEditDataSetInfo);
 }
 
+DataSet *DataSetWindow::getDisplayedDataSet()
+{
+    return DisplayedDataSet;
+}
+
+
 void DataSetWindow::SendXYDataSetToPlot()
 {// A signal to tell the parent widnow that the dataset must be plotted when the
  // user choses XYPlot from the context Menu of the DatSetWidnow
@@ -115,4 +121,9 @@ void DataSetWindow::receiveNewDataSetName(QString* name)
 
 
    emit refreshPlottingActions_SIGNAL(); // instruct parent window to update the main menu actions
+}
+
+void DataSetWindow::receiveNewDataSetDescription(QString * description)
+{
+    DisplayedDataSet->setDescription(description);
 }
