@@ -15,27 +15,40 @@ FunctionDialog::~FunctionDialog()
     delete ui;
 }
 
+
+
 QVector<QString> FunctionDialog::findDataSets(QString expression)
 {
-    string expStr = expression.toStdString(); // Convert expression string to standard C++ string.
-    regex search("D\\d+"); // Look for dataset (in the format of "D" + an integer) names in the expression.
-    sregex_iterator end, begin(expStr.begin(), expStr.end(), search);
-    smatch found;
     QVector<QString> names;
-
-    while (begin != end) // Search for any valid dataset names in the expression.
-    {
-        found = *begin;
-
-        if (!isRepeat(found.str(), names)) // Check if the found name is a repeat.
-        {
-            names.append(QString::fromStdString(found.str())); // Save the name as a string and add it to a vector.
+    QStringList words;
+    
+    // Use QTextStream to read words from the expression
+    QTextStream stream(&expression);
+    QString word;
+    
+    // Read words from the stream
+    while (!stream.atEnd()) {
+        stream >> word; // Read a word from the stream
+        if (!word.isEmpty()) {
+            words.append(word); // Add each non-empty word to the QStringList
         }
-
-        ++begin;
     }
 
-    return names; // Return this vector of names.
+    // Iterate through all datasets
+    for (DataSet* dataSet : dataBases)
+    {
+        if (dataSet) // Ensure the dataset is valid
+        {
+            QString dataSetName = dataSet->getName();
+            // Check if the dataset name is in the list of words
+            if (words.contains(dataSetName, Qt::CaseInsensitive)) // Case insensitive
+            {
+                names.append(dataSetName); // Add to the result list
+            }
+        }
+    }
+
+    return names;
 }
 
 // A function to return the computed dataset from the expression to the parent window
@@ -172,7 +185,6 @@ QString FunctionDialog::generateVar(QVector<QString> databaseNames)
 
         var += databaseNames[size - 1]; // Name of last dataset invovled.
     }
-
     return var; // Return the formatted string.
 }
 // Obtain all datapoints from a given dataset.

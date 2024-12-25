@@ -109,6 +109,23 @@ QString DataSet::getName()
 
 void DataSet::setName(QString* name)
 {// Function to set the name of the dataset
+    // Check if the name is empty
+    if (name->isEmpty())
+    {
+        QMessageBox::warning(nullptr, "Invalid Name", "Dataset name cannot be empty.");
+        return;
+    }
+
+    // Check if the name starts with a digit, which will cause the function feature to work abnormally.
+    // Further fixing needed, Preliminary speculation is that there is a problem with the part that performs the operation.
+    if (name->at(0).isDigit())
+    {
+        // Show a message box to inform the user that the name cannot start with a number
+        QMessageBox::warning(nullptr, "Invalid Name", "Dataset name cannot start with a number.");
+        return;
+    }
+
+    // If the name is valid, set the name
     DataSetName = *name;
 }
 

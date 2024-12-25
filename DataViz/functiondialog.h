@@ -18,6 +18,7 @@
 #include <QDialog>
 #include <QMessageBox>
 #include <regex>
+#include <QTextStream>
 #include "dataset.h"
 #include "atmsp.h"
 
