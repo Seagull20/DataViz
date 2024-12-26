@@ -12,6 +12,7 @@
 
 #include "qcustomplot.h"
 #include <QDialog>
+#include "graphwindow.h"
 #include "errordialog.h"
 
 namespace Ui {
@@ -29,12 +30,14 @@ public:
 private:
     Ui::GraphStyleDialog *ui;
     void displayErrorDialog(int errCode);
-
+    std::optional<QString> rangeChecker(const QString &leftRange, const QString &rightRange, QVector<double> &Range);
     QList<QCPGraph*> allGraphs;
     QCPGraph* graph = nullptr;
     QPen* pen = nullptr;
     QColor selectedColour;
     QCPGraph* selectedGraph = nullptr;
+
+    QString xLabel,yLabel,xLeftRange,xRightRange,yLeftRange,yRightRange;
 
 private slots:
     void on_selectColourButton_clicked();
@@ -44,6 +47,8 @@ private slots:
 
 signals:
     void ChangeGraphStyle_SIGNAL(QCPGraph* graph, QPen* pen);
+    void ChangeAxisLabels(const QString &xLabel, const QString &yLabel);
+    void ChangeRanges(const QString &xLeftRange,const QString &xRightRange,const QString &yLeftRange,const QString &yRightRange);
 };
 
 #endif // GRAPHSTYLEDIALOG_H

@@ -40,11 +40,13 @@ public:
     ~GraphWindow();
 
 
-
     void SetGraphSetting(DataSet *DataSet); // Function to control the setting of the curve (dataset represenation in the figure)
     void SetHistogramSetting(QVector<double>* data, int numBins, QString histPlotName);
     QVector<double>* extractHistDataFromDataSet(DataSet* dataSet);
     void SetFigureSetting(); // Function to control the setting of the figure itself
+    void getXRnage(QString &upper,QString &lower);
+    void getYRnage(QString &upper,QString &lower);
+    void getLabel(QString &xLabel, QString &yLabel);
 
     static int FigureCounter; // Number of Figures created in the app ( defined as static because it is shared among all objects of this class)
     QList<QCPGraph*> AllGraphs;
@@ -62,6 +64,8 @@ private:
     // other actions
     QAction* actionEditStyle=new QAction("Edit Style", this);
 
+    QCPRange xRange,yRange;
+
     void contextMenuEvent(QContextMenuEvent *event);
     void ConstructContextMenu(QMenu *);
 
@@ -71,6 +75,8 @@ private slots:
     void OpenPlotDataDialog();
     void receiveAllDataSets(QList<DataSet*> receivedDataSets);
     void receiveChosenDataSet(DataSet* chosenDataSet);
+    void setAxisLabels(const QString &xLabel, const QString &yLabel);
+    void setRanges(const QString &xLeftRange,const QString &xRightRange,const QString &yLeftRange,const QString &yRightRange);
 
 signals:
     void requestAllDataSets_SIGNAL();

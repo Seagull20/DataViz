@@ -108,6 +108,9 @@ void GraphWindow::SetGraphSetting(DataSet *DataSet)
     ui->customPlot->graph(graphCount-1)->setPen(QPen(Qt::blue));
     ui->customPlot->graph(graphCount-1)->setName(DataSet->getName());
     ui->customPlot->graph(graphCount-1)->rescaleAxes();
+    xRange = ui->customPlot->xAxis->range();
+    yRange = ui->customPlot->yAxis->range();
+
     ui->customPlot->replot();
 
     // add to a list of all graphs - for access in the style editing window
@@ -204,6 +207,29 @@ void GraphWindow::SetFigureSetting()
     ui->customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 }
 
+void GraphWindow::getXRnage(QString &upper, QString &lower)
+{
+    double digUpper= ui->customPlot->xAxis->range().upper;
+    double digLower =ui->customPlot->xAxis->range().lower;
+    upper = QString::number(digUpper);
+    lower = QString::number(digLower);
+}
+
+void GraphWindow::getYRnage(QString &upper, QString &lower)
+{
+    double digUpper= ui->customPlot->yAxis->range().upper;
+    double digLower =ui->customPlot->yAxis->range().lower;
+    upper = QString::number(digUpper);
+    lower = QString::number(digLower);
+}
+
+void GraphWindow::getLabel(QString &xLabel, QString &yLabel)
+{
+    xLabel = ui->customPlot->xAxis->label();
+    yLabel = ui->customPlot->yAxis->label();
+}
+
+
 void GraphWindow::OpenGraphStyleDialog()
 {
     GraphStyleDialog* GraphStyle_dlg=new GraphStyleDialog(AllGraphs, this);
@@ -228,6 +254,33 @@ void GraphWindow::receiveChosenDataSet(DataSet* chosenDataSet)
 {
 
     SetGraphSetting(chosenDataSet);
+}
+
+void GraphWindow::setAxisLabels(const QString &xLabel, const QString &yLabel)
+{
+    ui->customPlot->xAxis->setLabel(xLabel);
+    ui->customPlot->yAxis->setLabel(yLabel);
+    ui->customPlot->replot();
+}
+
+void GraphWindow::setRanges(const QString &xLeftRange, const QString &xRightRange, const QString &yLeftRange, const QString &yRightRange)
+{
+    bool okXLeft, okXRight, okYLeft, okYRight; // Variables to check if the conversion was successful
+
+    // Convert QString to double
+    double digLowerX = xLeftRange.toDouble(&okXLeft);
+    double digUpperX = xRightRange.toDouble(&okXRight);
+    double digLowerY = yLeftRange.toDouble(&okYLeft);
+    double digUpperY = yRightRange.toDouble(&okYRight);
+
+    // Check if the conversion was successful
+    if (okXLeft && okXRight && okYLeft && okYRight) {
+        // Set x-axis range
+        ui->customPlot->xAxis->setRange(digLowerX, digUpperX);
+        // Set y-axis range
+        ui->customPlot->yAxis->setRange(digLowerY, digUpperY);
+        ui->customPlot->replot();
+    }
 }
 
 void GraphWindow::ChangeGraphStyle(QCPGraph * graph, QPen * pen)
