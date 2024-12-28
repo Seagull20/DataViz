@@ -13697,6 +13697,7 @@ QCustomPlot::QCustomPlot(QWidget *parent) :
   // connect construct menu actions signals and slots
   connect(actionEditStyle, SIGNAL(triggered()), parent, SLOT(OpenGraphStyleDialog()));
   connect(actionAddData, SIGNAL(triggered()), parent, SLOT(OpenPlotDataDialog()));
+  connect(actionExportPlot, SIGNAL(triggered()), parent, SLOT(ExportPlot()));
 
 }
 
@@ -15724,9 +15725,11 @@ void QCustomPlot::ConstructContextMenu()
 {
   actionEditStyle->setIcon(QIcon(":/icons/edit.svg"));
   actionAddData->setIcon(QIcon(":/icons/graph.svg"));
+  actionExportPlot->setIcon(QIcon(":/icons/saveSymbol.svg"));
 
   ContextMenu->addAction(actionEditStyle);
   ContextMenu->addAction(actionAddData);
+  ContextMenu->addAction(actionExportPlot);
 }
 
 void QCustomPlot::contextMenuEvent(QContextMenuEvent *event)

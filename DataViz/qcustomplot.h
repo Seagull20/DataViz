@@ -4032,6 +4032,7 @@ private:
     QMenu* ContextMenu = new QMenu(this);
     QAction* actionAddData = new QAction("Add Data", this);
     QAction* actionEditStyle = new QAction("Edit Style", this);
+    QAction* actionExportPlot = new QAction("Export Plot",this);
 };
 Q_DECLARE_METATYPE(QCustomPlot::LayerInsertMode)
 Q_DECLARE_METATYPE(QCustomPlot::RefreshPriority)

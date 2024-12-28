@@ -9,6 +9,7 @@ ParentWindow::ParentWindow(QWidget *parent)
     this->setWindowIcon(QIcon(":/icons/DataViz.png"));
     this->setWindowTitle("DataViz 0.2");
 
+
     // Setting the Main widget of the application
     setCentralWidget(ui->WindowsManager);
 

@@ -10,6 +10,7 @@
         <file>histogram.svg</file>
         <file>function.svg</file>
         <file>plot.svg</file>
+        <file>saveSymbol.svg</file>
     </qresource>
     <qresource prefix="/images">
         <file>SplashScreen.png</file>

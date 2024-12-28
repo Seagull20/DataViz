@@ -24,10 +24,10 @@
     <normaloff>:/icons/graph.svg</normaloff>:/icons/graph.svg</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QCustomPlot" name="customPlot" native="true">
      <property name="contextMenuPolicy">
-      <enum>Qt::DefaultContextMenu</enum>
+      <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>

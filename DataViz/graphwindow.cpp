@@ -30,6 +30,7 @@ GraphWindow::GraphWindow(DataSet *DataSet, QWidget *parent) :
     // connect context menu actions signals and slots
     connect(actionEditStyle,SIGNAL(triggered()),this,SLOT(OpenGraphStyleDialog()));
     connect(actionAddData,SIGNAL(triggered()),this,SLOT(OpenPlotDataDialog()));
+    connect(actionExportPlot, SIGNAL(triggered()), this, SLOT(ExportPlot()));
 
     // connect signals and slots for accessing datasets
     connect(this, SIGNAL(requestAllDataSets_SIGNAL()), parent, SLOT(receiveAllDataSetsRequest()));
@@ -64,12 +65,14 @@ GraphWindow::GraphWindow(DataSet *DataSet, int numBins, QString histPlotName, QW
     actionEditStyle->setIcon(QIcon(":/icons/edit.svg"));
     actionAddData->setIcon(QIcon(":/icons/graph.svg"));
 
+
     // Constructing the context menu so it is ready to be called whenever
     ConstructContextMenu(ContextMenu);
 
     // connect context menu actions signals and slots
     connect(actionEditStyle,SIGNAL(triggered()),this,SLOT(OpenGraphStyleDialog()));
     connect(actionAddData,SIGNAL(triggered()),this,SLOT(OpenPlotDataDialog()));
+
 
     // connect signals and slots for accessing datasets
     connect(this, SIGNAL(requestAllDataSets_SIGNAL()), parent, SLOT(receiveAllDataSetsRequest()));
@@ -80,6 +83,7 @@ GraphWindow::~GraphWindow()
 { // Called when the window of the figure is closed
     delete actionEditStyle;
     delete actionAddData;
+    delete actionExportPlot;
     delete ContextMenu;
     delete ui;
 }
@@ -93,9 +97,11 @@ void GraphWindow::ConstructContextMenu(QMenu *)
 {// This function is called in the constructor to build the context menu so that it does not need to be built everytime from scratch
     actionEditStyle->setIcon(QIcon(":/icons/edit.svg"));
     actionAddData->setIcon(QIcon(":/icons/graph.svg"));
+    actionExportPlot->setIcon(QIcon(":/icons/saveSymbol.svg"));
 
     ContextMenu->addAction(actionEditStyle); // Add action
     ContextMenu->addAction(actionAddData); // Add sub menu
+    ContextMenu->addAction(actionExportPlot); //Add action to export plot
 }
 
 void GraphWindow::SetGraphSetting(DataSet *DataSet)
@@ -229,7 +235,6 @@ void GraphWindow::getLabel(QString &xLabel, QString &yLabel)
     yLabel = ui->customPlot->yAxis->label();
 }
 
-
 void GraphWindow::OpenGraphStyleDialog()
 {
     GraphStyleDialog* GraphStyle_dlg=new GraphStyleDialog(AllGraphs, this);
@@ -248,6 +253,45 @@ void GraphWindow::OpenPlotDataDialog()
     PlotDataDialog* PlotData_dlg=new PlotDataDialog(AllDataSets, this);
     PlotData_dlg->exec();
     delete PlotData_dlg;
+}
+
+void GraphWindow::ExportPlot()
+{
+    //QList("bmp", "cur", "ico", "jfif", "jpeg", "jpg", "pbm", "pgm", "png", "ppm", "xbm", "xpm") are supported
+    // Get the current directory
+    QString curPath = QDir::currentPath();
+
+    // Open the save file dialog
+    QString fileName = QFileDialog::getSaveFileName(
+        this,
+        tr("Export Plot"),
+        curPath + "/plot",
+        tr("PNG Image (*.png);;JPG Image (*.jpg);;BMP Image (*.bmp);;PDF Document (*.pdf)")
+        );
+
+    // If the user cancels the save operation
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    // Call the appropriate save method based on the file extension
+    if (fileName.endsWith(".png", Qt::CaseInsensitive)) {
+        ui->customPlot->savePng(fileName, 800, 600);
+    } else if (fileName.endsWith(".jpg", Qt::CaseInsensitive)) {
+        ui->customPlot->saveJpg(fileName, 800, 600, 1.0, 90);
+    } else if (fileName.endsWith(".bmp", Qt::CaseInsensitive)) {
+        ui->customPlot->saveBmp(fileName, 800, 600);
+    } else if (fileName.endsWith(".pdf", Qt::CaseInsensitive)) {
+        ui->customPlot->savePdf(fileName, false, 800);
+    } else {
+        // Default handling: save as PNG
+        fileName.append(".png");
+        ui->customPlot->savePng(fileName, 800, 600);
+    }
+
+    // Display a success message after saving
+    QMessageBox::information(this, tr("Export Plot"), tr("Plot successfully exported to:\n%1").arg(fileName));
+
 }
 
 void GraphWindow::receiveChosenDataSet(DataSet* chosenDataSet)

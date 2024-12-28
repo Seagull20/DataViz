@@ -17,6 +17,7 @@
 
 #include <QDialog>
 #include <QMenu>
+#include <QMenuBar>
 #include <QContextMenuEvent>
 #include <QAction>
 #include <QVector>
@@ -48,6 +49,7 @@ public:
     void getYRnage(QString &upper,QString &lower);
     void getLabel(QString &xLabel, QString &yLabel);
 
+
     static int FigureCounter; // Number of Figures created in the app ( defined as static because it is shared among all objects of this class)
     QList<QCPGraph*> AllGraphs;
 
@@ -64,6 +66,8 @@ private:
     // other actions
     QAction* actionEditStyle=new QAction("Edit Style", this);
 
+    QAction* actionExportPlot = new QAction("Export Plot",this);
+
     QCPRange xRange,yRange;
 
     void contextMenuEvent(QContextMenuEvent *event);
@@ -73,6 +77,7 @@ private slots:
     void ChangeGraphStyle(QCPGraph * graph, QPen* pen);
     void OpenGraphStyleDialog();
     void OpenPlotDataDialog();
+    void ExportPlot();
     void receiveAllDataSets(QList<DataSet*> receivedDataSets);
     void receiveChosenDataSet(DataSet* chosenDataSet);
     void setAxisLabels(const QString &xLabel, const QString &yLabel);
