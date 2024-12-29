@@ -43,6 +43,12 @@ static constexpr auto qt_meta_stringdata_ZN11GraphWindowE = QtMocHelpers::string
     "GraphWindow",
     "requestAllDataSets_SIGNAL",
     "",
+    "receiveFigConfigure",
+    "int*",
+    "width",
+    "length",
+    "QString*",
+    "format",
     "ChangeGraphStyle",
     "QCPGraph*",
     "graph",
@@ -50,7 +56,7 @@ static constexpr auto qt_meta_stringdata_ZN11GraphWindowE = QtMocHelpers::string
     "pen",
     "OpenGraphStyleDialog",
     "OpenPlotDataDialog",
-    "ExportPlot",
+    "openExportPlotDialog",
     "receiveAllDataSets",
     "QList<DataSet*>",
     "receivedDataSets",
@@ -76,7 +82,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11GraphWindowE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -84,30 +90,32 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11GraphWindowE[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   68,    2, 0x06,    1 /* Public */,
+       1,    0,   74,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       3,    2,   69,    2, 0x08,    2 /* Private */,
-       8,    0,   74,    2, 0x08,    5 /* Private */,
-       9,    0,   75,    2, 0x08,    6 /* Private */,
-      10,    0,   76,    2, 0x08,    7 /* Private */,
-      11,    1,   77,    2, 0x08,    8 /* Private */,
-      14,    1,   80,    2, 0x08,   10 /* Private */,
-      17,    2,   83,    2, 0x08,   12 /* Private */,
-      20,    4,   88,    2, 0x08,   15 /* Private */,
+       3,    3,   75,    2, 0x0a,    2 /* Public */,
+       9,    2,   82,    2, 0x08,    6 /* Private */,
+      14,    0,   87,    2, 0x08,    9 /* Private */,
+      15,    0,   88,    2, 0x08,   10 /* Private */,
+      16,    0,   89,    2, 0x08,   11 /* Private */,
+      17,    1,   90,    2, 0x08,   12 /* Private */,
+      20,    1,   93,    2, 0x08,   14 /* Private */,
+      23,    2,   96,    2, 0x08,   16 /* Private */,
+      26,    4,  101,    2, 0x08,   19 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 4, 0x80000000 | 6,    5,    7,
+    QMetaType::Void, 0x80000000 | 4, 0x80000000 | 4, 0x80000000 | 7,    5,    6,    8,
+    QMetaType::Void, 0x80000000 | 10, 0x80000000 | 12,   11,   13,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 12,   13,
-    QMetaType::Void, 0x80000000 | 15,   16,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   18,   19,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   21,   22,   23,   24,
+    QMetaType::Void, 0x80000000 | 18,   19,
+    QMetaType::Void, 0x80000000 | 21,   22,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   24,   25,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   27,   28,   29,   30,
 
        0        // eod
 };
@@ -123,6 +131,11 @@ Q_CONSTINIT const QMetaObject GraphWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<GraphWindow, std::true_type>,
         // method 'requestAllDataSets_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'receiveFigConfigure'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString *, std::false_type>,
         // method 'ChangeGraphStyle'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QCPGraph *, std::false_type>,
@@ -131,7 +144,7 @@ Q_CONSTINIT const QMetaObject GraphWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'OpenPlotDataDialog'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'ExportPlot'
+        // method 'openExportPlotDialog'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'receiveAllDataSets'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -159,21 +172,22 @@ void GraphWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->requestAllDataSets_SIGNAL(); break;
-        case 1: _t->ChangeGraphStyle((*reinterpret_cast< std::add_pointer_t<QCPGraph*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPen*>>(_a[2]))); break;
-        case 2: _t->OpenGraphStyleDialog(); break;
-        case 3: _t->OpenPlotDataDialog(); break;
-        case 4: _t->ExportPlot(); break;
-        case 5: _t->receiveAllDataSets((*reinterpret_cast< std::add_pointer_t<QList<DataSet*>>>(_a[1]))); break;
-        case 6: _t->receiveChosenDataSet((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
-        case 7: _t->setAxisLabels((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
-        case 8: _t->setRanges((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
+        case 1: _t->receiveFigConfigure((*reinterpret_cast< std::add_pointer_t<int*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString*>>(_a[3]))); break;
+        case 2: _t->ChangeGraphStyle((*reinterpret_cast< std::add_pointer_t<QCPGraph*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPen*>>(_a[2]))); break;
+        case 3: _t->OpenGraphStyleDialog(); break;
+        case 4: _t->OpenPlotDataDialog(); break;
+        case 5: _t->openExportPlotDialog(); break;
+        case 6: _t->receiveAllDataSets((*reinterpret_cast< std::add_pointer_t<QList<DataSet*>>>(_a[1]))); break;
+        case 7: _t->receiveChosenDataSet((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
+        case 8: _t->setAxisLabels((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
+        case 9: _t->setRanges((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
         default: ;
         }
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-        case 1:
+        case 2:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -213,14 +227,14 @@ int GraphWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }

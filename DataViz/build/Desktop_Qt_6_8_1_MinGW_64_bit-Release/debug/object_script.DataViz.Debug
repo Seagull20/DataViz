@@ -3,6 +3,7 @@ debug/changedatasetinfodialog.o
 debug/dataset.o
 debug/datasetwindow.o
 debug/errordialog.o
+debug/figureexportdialog.o
 debug/functiondialog.o
 debug/graphstyledialog.o
 debug/graphwindow.o
@@ -17,6 +18,7 @@ debug/moc_aboutdialog.o
 debug/moc_changedatasetinfodialog.o
 debug/moc_datasetwindow.o
 debug/moc_errordialog.o
+debug/moc_figureexportdialog.o
 debug/moc_functiondialog.o
 debug/moc_graphstyledialog.o
 debug/moc_graphwindow.o

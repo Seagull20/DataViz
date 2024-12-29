@@ -13697,7 +13697,7 @@ QCustomPlot::QCustomPlot(QWidget *parent) :
   // connect construct menu actions signals and slots
   connect(actionEditStyle, SIGNAL(triggered()), parent, SLOT(OpenGraphStyleDialog()));
   connect(actionAddData, SIGNAL(triggered()), parent, SLOT(OpenPlotDataDialog()));
-  connect(actionExportPlot, SIGNAL(triggered()), parent, SLOT(ExportPlot()));
+  connect(actionExportPlot, SIGNAL(triggered()), parent, SLOT(openExportPlotDialog()));
 
 }
 

@@ -1,6 +1,6 @@
 #include "graphwindow.h"
 #include "ui_graphwindow.h"
-
+#include "figureexportdialog.h"
 // Initialising the static variable
 int GraphWindow::FigureCounter=0;
 
@@ -12,6 +12,7 @@ GraphWindow::GraphWindow(DataSet *DataSet, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    curretDataset = DataSet;
     // Increment the figure counter:
     FigureCounter++;
 
@@ -30,7 +31,7 @@ GraphWindow::GraphWindow(DataSet *DataSet, QWidget *parent) :
     // connect context menu actions signals and slots
     connect(actionEditStyle,SIGNAL(triggered()),this,SLOT(OpenGraphStyleDialog()));
     connect(actionAddData,SIGNAL(triggered()),this,SLOT(OpenPlotDataDialog()));
-    connect(actionExportPlot, SIGNAL(triggered()), this, SLOT(ExportPlot()));
+    connect(actionExportPlot, SIGNAL(triggered()), this, SLOT(openExportPlotDialog()));
 
     // connect signals and slots for accessing datasets
     connect(this, SIGNAL(requestAllDataSets_SIGNAL()), parent, SLOT(receiveAllDataSetsRequest()));
@@ -255,43 +256,12 @@ void GraphWindow::OpenPlotDataDialog()
     delete PlotData_dlg;
 }
 
-void GraphWindow::ExportPlot()
+void GraphWindow::openExportPlotDialog()
 {
-    //QList("bmp", "cur", "ico", "jfif", "jpeg", "jpg", "pbm", "pgm", "png", "ppm", "xbm", "xpm") are supported
-    // Get the current directory
-    QString curPath = QDir::currentPath();
-
-    // Open the save file dialog
-    QString fileName = QFileDialog::getSaveFileName(
-        this,
-        tr("Export Plot"),
-        curPath + "/plot",
-        tr("PNG Image (*.png);;JPG Image (*.jpg);;BMP Image (*.bmp);;PDF Document (*.pdf)")
-        );
-
-    // If the user cancels the save operation
-    if (fileName.isEmpty()) {
-        return;
-    }
-
-    // Call the appropriate save method based on the file extension
-    if (fileName.endsWith(".png", Qt::CaseInsensitive)) {
-        ui->customPlot->savePng(fileName, 800, 600);
-    } else if (fileName.endsWith(".jpg", Qt::CaseInsensitive)) {
-        ui->customPlot->saveJpg(fileName, 800, 600, 1.0, 90);
-    } else if (fileName.endsWith(".bmp", Qt::CaseInsensitive)) {
-        ui->customPlot->saveBmp(fileName, 800, 600);
-    } else if (fileName.endsWith(".pdf", Qt::CaseInsensitive)) {
-        ui->customPlot->savePdf(fileName, false, 800);
-    } else {
-        // Default handling: save as PNG
-        fileName.append(".png");
-        ui->customPlot->savePng(fileName, 800, 600);
-    }
-
-    // Display a success message after saving
-    QMessageBox::information(this, tr("Export Plot"), tr("Plot successfully exported to:\n%1").arg(fileName));
-
+    emit requestAllDataSets_SIGNAL();
+    figureExportDialog* figureExport_dlg = new figureExportDialog(*curretDataset,this);
+    figureExport_dlg->exec();
+    delete figureExport_dlg;
 }
 
 void GraphWindow::receiveChosenDataSet(DataSet* chosenDataSet)
@@ -299,6 +269,57 @@ void GraphWindow::receiveChosenDataSet(DataSet* chosenDataSet)
 
     SetGraphSetting(chosenDataSet);
 }
+
+void GraphWindow::receiveFigConfigure(int *width, int *length, QString *format)
+{
+    QString curPath = QDir::currentPath();
+
+    // Set the default file name
+    QString defaultFileName = curPath + "/plot." + format->toLower();
+
+    // Open the save file dialog, allowing the user to select only the path
+    QString fileName = QFileDialog::getSaveFileName(
+        this,
+        tr("Export Plot"),
+        defaultFileName,
+        tr("%1 Files (*.%2)").arg(format->toUpper(), format->toLower())
+        );
+
+    // If the user cancels the save operation
+    if (fileName.isEmpty()) {
+        delete width;
+        delete length;
+        delete format;
+        return;
+    }
+
+    // Ensure the file name contains the correct extension
+    if (!fileName.endsWith("." + format->toLower(), Qt::CaseInsensitive)) {
+        fileName += "." + format->toLower();
+    }
+
+
+    // Save the plot based on the file format
+    if (*format == "PDF") {
+        if (!ui->customPlot->savePdf(fileName, *width, *length)) {
+            QMessageBox::warning(this, tr("Export Error"), tr("Failed to export the plot as PDF."));
+        }
+    } else {
+        if (!ui->customPlot->saveRastered(fileName, *width, *length, 1.0, format->toLower().toUtf8().constData())) {
+            QMessageBox::warning(this, tr("Export Error"), tr("Failed to export the plot as %1.").arg(*format));
+        }
+    }
+
+    // Display a success message after saving
+    QMessageBox::information(this, tr("Export Plot"), tr("Plot successfully exported to:\n%1").arg(fileName));
+
+    // Release dynamically allocated memory
+    delete width;
+    delete length;
+    delete format;
+}
+
+
 
 void GraphWindow::setAxisLabels(const QString &xLabel, const QString &yLabel)
 {

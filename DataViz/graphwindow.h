@@ -56,7 +56,7 @@ public:
 private:
     Ui::GraphWindow *ui;
     QList<DataSet*> AllDataSets;
-
+    DataSet* curretDataset;
     // context menu
     QMenu *ContextMenu=new QMenu(this);
 
@@ -72,12 +72,13 @@ private:
 
     void contextMenuEvent(QContextMenuEvent *event);
     void ConstructContextMenu(QMenu *);
-
+public slots:
+    void receiveFigConfigure(int* width, int* length, QString* format);
 private slots:
     void ChangeGraphStyle(QCPGraph * graph, QPen* pen);
     void OpenGraphStyleDialog();
     void OpenPlotDataDialog();
-    void ExportPlot();
+    void openExportPlotDialog();
     void receiveAllDataSets(QList<DataSet*> receivedDataSets);
     void receiveChosenDataSet(DataSet* chosenDataSet);
     void setAxisLabels(const QString &xLabel, const QString &yLabel);
