@@ -8,6 +8,7 @@ debug/functiondialog.o
 debug/graphstyledialog.o
 debug/graphwindow.o
 debug/helpdialog.o
+debug/interpolationdialog.o
 debug/main.o
 debug/parentwindow.o
 debug/plotdatadialog.o
@@ -23,6 +24,7 @@ debug/moc_functiondialog.o
 debug/moc_graphstyledialog.o
 debug/moc_graphwindow.o
 debug/moc_helpdialog.o
+debug/moc_interpolationdialog.o
 debug/moc_parentwindow.o
 debug/moc_plotdatadialog.o
 debug/moc_plothistogramdatadialog.o

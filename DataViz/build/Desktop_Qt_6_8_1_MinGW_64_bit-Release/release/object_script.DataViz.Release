@@ -8,6 +8,7 @@ release/functiondialog.o
 release/graphstyledialog.o
 release/graphwindow.o
 release/helpdialog.o
+release/interpolationdialog.o
 release/main.o
 release/parentwindow.o
 release/plotdatadialog.o
@@ -23,6 +24,7 @@ release/moc_functiondialog.o
 release/moc_graphstyledialog.o
 release/moc_graphwindow.o
 release/moc_helpdialog.o
+release/moc_interpolationdialog.o
 release/moc_parentwindow.o
 release/moc_plotdatadialog.o
 release/moc_plothistogramdatadialog.o

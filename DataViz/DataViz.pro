@@ -19,6 +19,7 @@ SOURCES += \
     graphstyledialog.cpp \
     graphwindow.cpp \
     helpdialog.cpp \
+    interpolationdialog.cpp \
     main.cpp \
     parentwindow.cpp \
     plotdatadialog.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     graphstyledialog.h \
     graphwindow.h \
     helpdialog.h \
+    interpolationdialog.h \
     parentwindow.h \
     plotdatadialog.h \
     plothistogramdatadialog.h \
@@ -52,6 +54,7 @@ FORMS += \
     graphstyledialog.ui \
     graphwindow.ui \
     helpdialog.ui \
+    interpolationdialog.ui \
     parentwindow.ui \
     plotdatadialog.ui \
     plothistogramdatadialog.ui

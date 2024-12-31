@@ -19,6 +19,7 @@ ParentWindow::ParentWindow(QWidget *parent)
     ui->menuXY_Plot->setEnabled(false);
     ui->actionHist_Plot->setEnabled(false);
     ui->actionFunction->setEnabled(false);
+    ui->actionInterpolation->setEnabled(false);
 
     // connect signal and slot for plotting XY graph from main menu
     connect(this, SIGNAL(PlotXYData_SIGNAL(DataSet*)), this, SLOT(GraphWindowToBePlotted(DataSet*)));
@@ -87,6 +88,8 @@ void ParentWindow::OpenDataSet(QString* FileName)
         ui->menuXY_Plot->setEnabled(true);
         ui->actionHist_Plot->setEnabled(true);
         ui->actionFunction->setEnabled(true);
+        ui->actionInterpolation->setEnabled(true); //Further improve needed:
+                                                    //it should be enabled with a least 2 datasets present.
     }
 }
 
@@ -234,6 +237,10 @@ void ParentWindow::deleteDataSet(DataSet* dataSet)
         ui->menuXY_Plot->setEnabled(false);
         ui->actionHist_Plot->setEnabled(false);
         ui->actionFunction->setEnabled(false);
+        ui->actionInterpolation->setEnabled(false);
+    }
+    if(AllDataSets.length()<2){
+        ui->actionInterpolation->setEnabled(false);
     }
 
     refreshPlottingActions();
@@ -268,5 +275,14 @@ void ParentWindow::receiveHistogramData(DataSet* dataSet, int numBins, QString h
 void ParentWindow::SaveFunctionDataToFile(QVector<double>* dataVector)
 {
    // TODO in a future version
+}
+
+
+void ParentWindow::on_actionInterpolation_triggered()
+{
+    interpolationDialog* interpolation_Dlg = new interpolationDialog(AllDataSets,this);
+    interpolation_Dlg->exec();
+
+    delete interpolation_Dlg;
 }
 

@@ -30,6 +30,7 @@ public:
     QAction *actionHelp;
     QAction *actionHist_Plot;
     QAction *actionFunction;
+    QAction *actionInterpolation;
     QWidget *centralwidget;
     QMdiArea *WindowsManager;
     QMenuBar *menubar;
@@ -69,6 +70,8 @@ public:
         QIcon icon3;
         icon3.addFile(QString::fromUtf8(":/icons/function.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         actionFunction->setIcon(icon3);
+        actionInterpolation = new QAction(ParentWindow);
+        actionInterpolation->setObjectName("actionInterpolation");
         centralwidget = new QWidget(ParentWindow);
         centralwidget->setObjectName("centralwidget");
         WindowsManager = new QMdiArea(centralwidget);
@@ -77,7 +80,7 @@ public:
         ParentWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(ParentWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 800, 18));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName("menuFile");
         menuPlot = new QMenu(menubar);
@@ -107,6 +110,7 @@ public:
         menuPlot->addAction(menuXY_Plot->menuAction());
         menuPlot->addAction(actionHist_Plot);
         menuAnalysis->addAction(actionFunction);
+        menuAnalysis->addAction(actionInterpolation);
         menuHelp->addAction(actionHelp);
         menuAbout->addAction(actionAbout);
         toolBar->addAction(actionLoad_Dataset);
@@ -124,6 +128,7 @@ public:
         actionHelp->setText(QCoreApplication::translate("ParentWindow", "Help", nullptr));
         actionHist_Plot->setText(QCoreApplication::translate("ParentWindow", "Histogram Plot", nullptr));
         actionFunction->setText(QCoreApplication::translate("ParentWindow", "Function", nullptr));
+        actionInterpolation->setText(QCoreApplication::translate("ParentWindow", "Interpolation", nullptr));
         menuFile->setTitle(QCoreApplication::translate("ParentWindow", "File", nullptr));
         menuPlot->setTitle(QCoreApplication::translate("ParentWindow", "Plot", nullptr));
         menuXY_Plot->setTitle(QCoreApplication::translate("ParentWindow", "XY Plot", nullptr));

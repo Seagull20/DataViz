@@ -29,6 +29,7 @@
 #include "functiondialog.h"
 #include "atmsp.h"
 #include "qmath.h"
+#include "interpolationdialog.h"
 #include <QTextStream>
 
 QT_BEGIN_NAMESPACE
@@ -60,6 +61,8 @@ private slots:
 
     void on_actionFunction_triggered();
 
+
+    void on_actionInterpolation_triggered();
 
 signals:
     void PlotXYData_SIGNAL(DataSet* ptr);

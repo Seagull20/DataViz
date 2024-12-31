@@ -63,7 +63,8 @@ static constexpr auto qt_meta_stringdata_ZN12ParentWindowE = QtMocHelpers::strin
     "histPlotName",
     "OpenHistPlotDialog",
     "selectedDataSet",
-    "on_actionFunction_triggered"
+    "on_actionFunction_triggered",
+    "on_actionInterpolation_triggered"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -75,7 +76,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12ParentWindowE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -83,22 +84,23 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12ParentWindowE[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   98,    2, 0x06,    1 /* Public */,
-       5,    1,  101,    2, 0x06,    3 /* Public */,
+       1,    1,  104,    2, 0x06,    1 /* Public */,
+       5,    1,  107,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       8,    0,  104,    2, 0x08,    5 /* Private */,
-       9,    1,  105,    2, 0x08,    6 /* Private */,
-      10,    0,  108,    2, 0x08,    8 /* Private */,
-      11,    0,  109,    2, 0x08,    9 /* Private */,
-      12,    0,  110,    2, 0x08,   10 /* Private */,
-      13,    0,  111,    2, 0x08,   11 /* Private */,
-      14,    0,  112,    2, 0x08,   12 /* Private */,
-      15,    1,  113,    2, 0x08,   13 /* Private */,
-      16,    0,  116,    2, 0x08,   15 /* Private */,
-      17,    3,  117,    2, 0x08,   16 /* Private */,
-      21,    1,  124,    2, 0x08,   20 /* Private */,
-      23,    0,  127,    2, 0x08,   22 /* Private */,
+       8,    0,  110,    2, 0x08,    5 /* Private */,
+       9,    1,  111,    2, 0x08,    6 /* Private */,
+      10,    0,  114,    2, 0x08,    8 /* Private */,
+      11,    0,  115,    2, 0x08,    9 /* Private */,
+      12,    0,  116,    2, 0x08,   10 /* Private */,
+      13,    0,  117,    2, 0x08,   11 /* Private */,
+      14,    0,  118,    2, 0x08,   12 /* Private */,
+      15,    1,  119,    2, 0x08,   13 /* Private */,
+      16,    0,  122,    2, 0x08,   15 /* Private */,
+      17,    3,  123,    2, 0x08,   16 /* Private */,
+      21,    1,  130,    2, 0x08,   20 /* Private */,
+      23,    0,  133,    2, 0x08,   22 /* Private */,
+      24,    0,  134,    2, 0x08,   23 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -116,6 +118,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12ParentWindowE[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 3, QMetaType::Int, QMetaType::QString,   18,   19,   20,
     QMetaType::Void, 0x80000000 | 3,   22,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -165,6 +168,8 @@ Q_CONSTINIT const QMetaObject ParentWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
         // method 'on_actionFunction_triggered'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_actionInterpolation_triggered'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -189,6 +194,7 @@ void ParentWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 11: _t->receiveHistogramData((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
         case 12: _t->OpenHistPlotDialog((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
         case 13: _t->on_actionFunction_triggered(); break;
+        case 14: _t->on_actionInterpolation_triggered(); break;
         default: ;
         }
     }
@@ -230,14 +236,14 @@ int ParentWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 15;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 15)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 14;
+        _id -= 15;
     }
     return _id;
 }
