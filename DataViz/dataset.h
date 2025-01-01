@@ -31,9 +31,9 @@ private:
     QString description;
 
 public:
-    DataSet(QString& FileName); // Create a new dataset by loading a file
-    DataSet(QVector<QPointF> dataIn); // Creating a new dataset by function evaluation
-    DataSet(gsl_matrix* inputMatrix);
+    DataSet(QString& FileName, int numberOfpresentDataset); // Create a new dataset by loading a file
+    DataSet(QVector<QPointF> dataIn, int numberOfpresentDataset); // Creating a new dataset by function evaluation
+    DataSet(gsl_matrix* inputMatrix, int numberOfpresentDataset);
     ~DataSet();
     int Size(); // function to get the size of the dataset (currenlty the number of rows only)
     QString getName(); // Function to get the name of the dataset

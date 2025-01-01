@@ -10,9 +10,9 @@ gsl_matrix *DataSet::getMatrix() const
     return Matrix;
 }
 
-DataSet::DataSet(QString& FileName)
+DataSet::DataSet(QString& FileName, int numberOfpresentDataset)
 { // constructing a DataSet from a file
-
+    DataSetCounter = numberOfpresentDataset;
    // Reading the data
     QFile file(FileName);
     if (file.open(QIODevice::ReadOnly))
@@ -81,9 +81,9 @@ DataSet::DataSet(QString& FileName)
 
 }
 
-DataSet::DataSet(QVector<QPointF> dataIn)
+DataSet::DataSet(QVector<QPointF> dataIn,int numberOfpresentDataset)
 {// constructing a DataSet from a a list of coordinates (useful for constructing a dataset from a function)
-
+    DataSetCounter = numberOfpresentDataset;
     // Creaing a GSL matrix element from the dataset
     if (!dataIn.isEmpty())
     {
@@ -101,8 +101,9 @@ DataSet::DataSet(QVector<QPointF> dataIn)
     }
 }
 
-DataSet::DataSet(gsl_matrix *inputMatrix)
+DataSet::DataSet(gsl_matrix *inputMatrix,int numberOfpresentDataset)
 {
+    DataSetCounter = numberOfpresentDataset;
     if(!(inputMatrix == nullptr)){
         Matrix = inputMatrix;
         NumberOfRows = (int)Matrix->size1;

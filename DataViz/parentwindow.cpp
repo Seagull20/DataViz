@@ -55,7 +55,7 @@ void ParentWindow::OpenDataSet(QString* FileName)
 {// called when loading dataset or a new dataset has been created using 'Function' action
 
     // Creating a new dataset in the app
-    AddedDataSet=std::make_shared<DataSet>(*FileName);
+    AddedDataSet=std::make_shared<DataSet>(*FileName,this->getDatasetsCount());
     if (AddedDataSet->IsDataSetValid) // Making sure the dataset is only dealt with if it was loaded succsessfully
     {
 
@@ -88,8 +88,10 @@ void ParentWindow::OpenDataSet(QString* FileName)
         ui->menuXY_Plot->setEnabled(true);
         ui->actionHist_Plot->setEnabled(true);
         ui->actionFunction->setEnabled(true);
-        ui->actionInterpolation->setEnabled(true); //Further improve needed:
-                                                    //it should be enabled with a least 2 datasets present.
+        //interpolation need at least 2 datasets
+        if(AllDataSets.size()> 1){
+            ui->actionInterpolation->setEnabled(true);
+        }
     }
 }
 
@@ -158,7 +160,7 @@ void ParentWindow::on_actionFunction_triggered()
     //check if the new DataSet contains elements
     if(!Function_dlg->getResult().isEmpty()){
         // Create a new dataset from the computed expression
-        AddedDataSet = std::make_shared<DataSet>(Function_dlg->getResult());
+        AddedDataSet = std::make_shared<DataSet>(Function_dlg->getResult(),this->getDatasetsCount());
 
         AllDataSets.push_back(AddedDataSet); // Addding a pointer to the new dataset so that it can be accessed by the rest of the app
 
@@ -191,6 +193,9 @@ void ParentWindow::on_actionFunction_triggered()
     // now data set has been loaded, can enable the menu actions that require a dataset
     ui->menuXY_Plot->setEnabled(true);
     ui->actionHist_Plot->setEnabled(true);
+    if(AllDataSets.size()> 1){
+        ui->actionInterpolation->setEnabled(true);
+    }
 
     delete Function_dlg;
 }
@@ -279,6 +284,11 @@ void ParentWindow::SaveFunctionDataToFile(QVector<double>* dataVector)
    // TODO in a future version
 }
 
+int ParentWindow::getDatasetsCount() const
+{
+    return AllDataSets.size();
+}
+
 
 void ParentWindow::on_actionInterpolation_triggered()
 {
@@ -288,7 +298,7 @@ void ParentWindow::on_actionInterpolation_triggered()
         return;
     }
     if(!(interpolation_Dlg->getInterpolatedMatrix() == nullptr)){
-        AddedDataSet =std::make_shared<DataSet>(interpolation_Dlg->getInterpolatedMatrix());
+        AddedDataSet =std::make_shared<DataSet>(interpolation_Dlg->getInterpolatedMatrix(),this->getDatasetsCount());
         AllDataSets.push_back(AddedDataSet);
 
         // Main menu actions for plotting new dataset

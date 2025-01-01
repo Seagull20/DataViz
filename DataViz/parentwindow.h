@@ -73,6 +73,7 @@ private:
     void displayErrorDialog(int errCode);
     void OpenDataSet(QString* FileName);
     void SaveFunctionDataToFile(QVector<double> *dataVector);
+    int getDatasetsCount() const;
 
 
     QList<std::shared_ptr<DataSet>> AllDataSets; // A List of all datasets loaded in the app
@@ -81,6 +82,7 @@ private:
     DataSetWindow* AddedDataSetWindow = nullptr;;// Temporary variable for datasetwindow (usually has the latest created datasetwidnow)
     QAction * actionXY_Plot = nullptr;
     QString functionExpression;
+
 
 
 };
