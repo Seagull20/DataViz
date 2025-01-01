@@ -42,8 +42,8 @@ public slots:
     void SendXYDataSetToPlot(); // Local slot to forward a single to the parent window
     void Open_HistPlotDialog();
     void displayChangeDataSetNameDialog();
-    void receiveNewDataSetName(QString*);
-    void receiveNewDataSetDescription(QString*);
+    void receiveNewDataSetName(std::shared_ptr<QString>);
+    void receiveNewDataSetDescription(std::shared_ptr<QString>);
 
 
 signals:

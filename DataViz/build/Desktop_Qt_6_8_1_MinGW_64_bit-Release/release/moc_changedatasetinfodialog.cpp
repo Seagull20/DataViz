@@ -40,8 +40,10 @@ static constexpr auto qt_meta_stringdata_ZN23ChangeDataSetInfoDialogE = QtMocHel
     "ChangeDataSetInfoDialog",
     "sendNewDataSetName_SIGNAL",
     "",
-    "QString*",
+    "std::shared_ptr<QString>",
+    "inputName",
     "sendNewDataSetDescription_SIGNAL",
+    "inputDescription",
     "on_buttonBox_accepted",
     "on_buttonBox_rejected"
 );
@@ -64,15 +66,15 @@ Q_CONSTINIT static const uint qt_meta_data_ZN23ChangeDataSetInfoDialogE[] = {
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
        1,    1,   38,    2, 0x06,    1 /* Public */,
-       4,    1,   41,    2, 0x06,    3 /* Public */,
+       5,    1,   41,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       5,    0,   44,    2, 0x08,    5 /* Private */,
-       6,    0,   45,    2, 0x08,    6 /* Private */,
+       7,    0,   44,    2, 0x08,    5 /* Private */,
+       8,    0,   45,    2, 0x08,    6 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3,    2,
-    QMetaType::Void, 0x80000000 | 3,    2,
+    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, 0x80000000 | 3,    6,
 
  // slots: parameters
     QMetaType::Void,
@@ -92,10 +94,10 @@ Q_CONSTINIT const QMetaObject ChangeDataSetInfoDialog::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<ChangeDataSetInfoDialog, std::true_type>,
         // method 'sendNewDataSetName_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<QString>, std::false_type>,
         // method 'sendNewDataSetDescription_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<QString>, std::false_type>,
         // method 'on_buttonBox_accepted'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_buttonBox_rejected'
@@ -109,8 +111,8 @@ void ChangeDataSetInfoDialog::qt_static_metacall(QObject *_o, QMetaObject::Call 
     auto *_t = static_cast<ChangeDataSetInfoDialog *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->sendNewDataSetName_SIGNAL((*reinterpret_cast< std::add_pointer_t<QString*>>(_a[1]))); break;
-        case 1: _t->sendNewDataSetDescription_SIGNAL((*reinterpret_cast< std::add_pointer_t<QString*>>(_a[1]))); break;
+        case 0: _t->sendNewDataSetName_SIGNAL((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<QString>>>(_a[1]))); break;
+        case 1: _t->sendNewDataSetDescription_SIGNAL((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<QString>>>(_a[1]))); break;
         case 2: _t->on_buttonBox_accepted(); break;
         case 3: _t->on_buttonBox_rejected(); break;
         default: ;
@@ -119,14 +121,14 @@ void ChangeDataSetInfoDialog::qt_static_metacall(QObject *_o, QMetaObject::Call 
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _q_method_type = void (ChangeDataSetInfoDialog::*)(QString * );
+            using _q_method_type = void (ChangeDataSetInfoDialog::*)(std::shared_ptr<QString> );
             if (_q_method_type _q_method = &ChangeDataSetInfoDialog::sendNewDataSetName_SIGNAL; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
         }
         {
-            using _q_method_type = void (ChangeDataSetInfoDialog::*)(QString * );
+            using _q_method_type = void (ChangeDataSetInfoDialog::*)(std::shared_ptr<QString> );
             if (_q_method_type _q_method = &ChangeDataSetInfoDialog::sendNewDataSetDescription_SIGNAL; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
@@ -167,14 +169,14 @@ int ChangeDataSetInfoDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_
 }
 
 // SIGNAL 0
-void ChangeDataSetInfoDialog::sendNewDataSetName_SIGNAL(QString * _t1)
+void ChangeDataSetInfoDialog::sendNewDataSetName_SIGNAL(std::shared_ptr<QString> _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
-void ChangeDataSetInfoDialog::sendNewDataSetDescription_SIGNAL(QString * _t1)
+void ChangeDataSetInfoDialog::sendNewDataSetDescription_SIGNAL(std::shared_ptr<QString> _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

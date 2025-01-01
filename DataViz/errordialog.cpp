@@ -45,6 +45,8 @@ QString ErrorDialog::getErrorDetails(int errCode)
             return "Function analysis requires use of 2 seperate datasets. Make sure you have entered the correct dataset names\n\nOperation has been cancelled. Please try again.";
         case 8:
             return "No Dataset Found! Please check your experssion";
+        case 9:
+            return "Dataset name should not be numeric";
         default:
             return "Valid error code not received.";
     }

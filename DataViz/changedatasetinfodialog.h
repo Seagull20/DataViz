@@ -36,8 +36,10 @@ private:
     void displayErrorDialog(int errCode);
 
 signals:
-    void sendNewDataSetName_SIGNAL(QString*);
-    void sendNewDataSetDescription_SIGNAL(QString*);
+signals:
+    void sendNewDataSetName_SIGNAL(std::shared_ptr<QString> inputName);
+    void sendNewDataSetDescription_SIGNAL(std::shared_ptr<QString> inputDescription);
+
 };
 
 #endif // CHANGEDATASETINFODIALOG_H

@@ -1,4 +1,5 @@
 #include "functiondialog.h"
+#include "qregularexpression.h"
 #include "ui_functiondialog.h"
 
 FunctionDialog::FunctionDialog(QList<std::shared_ptr<DataSet>> list,QWidget *parent) :
@@ -20,28 +21,30 @@ FunctionDialog::~FunctionDialog()
 QVector<QString> FunctionDialog::findDataSets(QString expression)
 {
     QVector<QString> names;
-    QStringList words;
-    
-    // Use QTextStream to read words from the expression
-    QTextStream stream(&expression);
-    QString word;
-    
-    // Read words from the stream
-    while (!stream.atEnd()) {
-        stream >> word; // Read a word from the stream
-        if (!word.isEmpty()) {
-            words.append(word); // Add each non-empty word to the QStringList
-        }
+
+    // Define a regular expression to match dataset names (adjust the pattern as needed)
+    // Here we assume dataset names are alphanumeric and may include underscores
+    QRegularExpression dataSetRegex("\\b[A-Za-z0-9_]+\\b");
+
+    // Find all matches in the expression
+    QRegularExpressionMatchIterator it = dataSetRegex.globalMatch(expression);
+    QStringList matchedWords;
+
+    while (it.hasNext()) {
+        QRegularExpressionMatch match = it.next();
+        QString word = match.captured(0); // Get the matched word
+        matchedWords.append(word);       // Add it to the list
     }
 
     // Iterate through all datasets
-    for (auto dataSet : dataBases)
+    for (const auto &dataSet : dataBases)
     {
         if (dataSet) // Ensure the dataset is valid
         {
             QString dataSetName = dataSet->getName();
-            // Check if the dataset name is in the list of words
-            if (words.contains(dataSetName, Qt::CaseInsensitive)) // Case insensitive
+
+            // Check if the dataset name is in the list of matched words
+            if (matchedWords.contains(dataSetName, Qt::CaseInsensitive)) // Case insensitive
             {
                 names.append(dataSetName); // Add to the result list
             }
@@ -50,6 +53,7 @@ QVector<QString> FunctionDialog::findDataSets(QString expression)
 
     return names;
 }
+
 
 // A function to return the computed dataset from the expression to the parent window
 QVector<QPointF> FunctionDialog::getResult()

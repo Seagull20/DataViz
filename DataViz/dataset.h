@@ -37,9 +37,9 @@ public:
     ~DataSet();
     int Size(); // function to get the size of the dataset (currenlty the number of rows only)
     QString getName(); // Function to get the name of the dataset
-    void setName(QString* name);
+    void setName(std::shared_ptr<QString> name);
 
-    void setDescription(QString* newDescription);
+    void setDescription(std::shared_ptr<QString> newDescription);
     QString getDescription() const;
     double* getPoint(int i); // Function to return the ith datapoint
 

@@ -1,4 +1,5 @@
 #include "changedatasetinfodialog.h"
+#include "qregularexpression.h"
 #include "ui_changedatasetinfodialog.h"
 #include "datasetwindow.h"
 ChangeDataSetInfoDialog::ChangeDataSetInfoDialog(QWidget *parent) :
@@ -15,8 +16,8 @@ ChangeDataSetInfoDialog::ChangeDataSetInfoDialog(QWidget *parent) :
         ui->textEdit->setText(dataSetWindow->getDisplayedDataSet()->getDescription()); // fectch the descrption stored in dataset object
     }
 
-    connect(this, SIGNAL(sendNewDataSetName_SIGNAL(QString*)), parent, SLOT(receiveNewDataSetName(QString*)));
-    connect(this,SIGNAL(sendNewDataSetDescription_SIGNAL(QString*)),parent,SLOT(receiveNewDataSetDescription(QString*)));
+    connect(this, SIGNAL(sendNewDataSetName_SIGNAL(std::shared_ptr<QString>)), parent, SLOT(receiveNewDataSetName(std::shared_ptr<QString>)));
+    connect(this,SIGNAL(sendNewDataSetDescription_SIGNAL(std::shared_ptr<QString>)),parent,SLOT(receiveNewDataSetDescription(std::shared_ptr<QString>)));
 }
 
 ChangeDataSetInfoDialog::~ChangeDataSetInfoDialog()
@@ -27,29 +28,35 @@ ChangeDataSetInfoDialog::~ChangeDataSetInfoDialog()
 void ChangeDataSetInfoDialog::on_buttonBox_accepted()
 {
     try {
-        QString* inputName = new QString(ui->lineEdit->text());
-        QString* inputDescription = new QString(ui->textEdit->toPlainText());
+        auto inputName = std::make_shared<QString>(ui->lineEdit->text().trimmed());
+        auto inputDescription = std::make_shared<QString>(ui->textEdit->toPlainText().trimmed());
 
-        if(inputName->length() > 0)
-        {
-
+        // Check if inputName is valid (not empty and not purely numeric)
+        QRegularExpression onlyNumbersRegex("^[0-9]+$");
+        if (inputName->length() > 0 && !onlyNumbersRegex.match(*inputName).hasMatch()) {
             emit sendNewDataSetName_SIGNAL(inputName);
         } else {
-            delete inputName;
+            // Show error message for invalid inputName
+            if (inputName->length() == 0) {
+                throw 2; // Error: Name is empty
+            } else if (onlyNumbersRegex.match(*inputName).hasMatch()) {
+                throw 9; // Error: Name is numeric
+            }
         }
+
+        // Check if inputDescription is valid (not empty)
         if (inputDescription->length() > 0) {
             emit sendNewDataSetDescription_SIGNAL(inputDescription);
-        }else{
-            delete inputDescription;
         }
     }
-    catch(int errCode)
+    catch (int errCode)
     {
         displayErrorDialog(errCode);
     }
 
     ChangeDataSetInfoDialog::close();
 }
+
 
 void ChangeDataSetInfoDialog::on_buttonBox_rejected()
 {

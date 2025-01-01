@@ -116,7 +116,7 @@ void DataSetWindow::displayChangeDataSetNameDialog()
    delete ChangeDataSetName_dlg;
 }
 
-void DataSetWindow::receiveNewDataSetName(QString* name)
+void DataSetWindow::receiveNewDataSetName(std::shared_ptr<QString> name)
 {
 
    DisplayedDataSet->setName(name);
@@ -126,7 +126,7 @@ void DataSetWindow::receiveNewDataSetName(QString* name)
    emit refreshPlottingActions_SIGNAL(); // instruct parent window to update the main menu actions
 }
 
-void DataSetWindow::receiveNewDataSetDescription(QString * description)
+void DataSetWindow::receiveNewDataSetDescription(std::shared_ptr<QString> description)
 {
     DisplayedDataSet->setDescription(description);
 }

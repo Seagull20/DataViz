@@ -43,10 +43,10 @@ static constexpr auto qt_meta_stringdata_ZN12ParentWindowE = QtMocHelpers::strin
     "ParentWindow",
     "PlotXYData_SIGNAL",
     "",
-    "DataSet*",
+    "std::shared_ptr<DataSet>",
     "ptr",
     "sendAllDataSets_SIGNAL",
-    "QList<DataSet*>",
+    "QList<std::shared_ptr<DataSet>>",
     "list",
     "on_actionLoad_Dataset_triggered",
     "GraphWindowToBePlotted",
@@ -135,15 +135,15 @@ Q_CONSTINIT const QMetaObject ParentWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<ParentWindow, std::true_type>,
         // method 'PlotXYData_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         // method 'sendAllDataSets_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QList<DataSet*>, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QList<std::shared_ptr<DataSet>>, std::false_type>,
         // method 'on_actionLoad_Dataset_triggered'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'GraphWindowToBePlotted'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         // method 'on_actionAbout_triggered'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_actionHelp_triggered'
@@ -156,17 +156,17 @@ Q_CONSTINIT const QMetaObject ParentWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'deleteDataSet'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         // method 'refreshPlottingActions'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'receiveHistogramData'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'OpenHistPlotDialog'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         // method 'on_actionFunction_triggered'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_actionInterpolation_triggered'
@@ -180,19 +180,19 @@ void ParentWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     auto *_t = static_cast<ParentWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->PlotXYData_SIGNAL((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
-        case 1: _t->sendAllDataSets_SIGNAL((*reinterpret_cast< std::add_pointer_t<QList<DataSet*>>>(_a[1]))); break;
+        case 0: _t->PlotXYData_SIGNAL((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1]))); break;
+        case 1: _t->sendAllDataSets_SIGNAL((*reinterpret_cast< std::add_pointer_t<QList<std::shared_ptr<DataSet>>>>(_a[1]))); break;
         case 2: _t->on_actionLoad_Dataset_triggered(); break;
-        case 3: _t->GraphWindowToBePlotted((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
+        case 3: _t->GraphWindowToBePlotted((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1]))); break;
         case 4: _t->on_actionAbout_triggered(); break;
         case 5: _t->on_actionHelp_triggered(); break;
         case 6: _t->on_actionHist_Plot_triggered(); break;
         case 7: _t->PlotXYData(); break;
         case 8: _t->receiveAllDataSetsRequest(); break;
-        case 9: _t->deleteDataSet((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
+        case 9: _t->deleteDataSet((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1]))); break;
         case 10: _t->refreshPlottingActions(); break;
-        case 11: _t->receiveHistogramData((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
-        case 12: _t->OpenHistPlotDialog((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
+        case 11: _t->receiveHistogramData((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
+        case 12: _t->OpenHistPlotDialog((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1]))); break;
         case 13: _t->on_actionFunction_triggered(); break;
         case 14: _t->on_actionInterpolation_triggered(); break;
         default: ;
@@ -201,14 +201,14 @@ void ParentWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _q_method_type = void (ParentWindow::*)(DataSet * );
+            using _q_method_type = void (ParentWindow::*)(std::shared_ptr<DataSet> );
             if (_q_method_type _q_method = &ParentWindow::PlotXYData_SIGNAL; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
         }
         {
-            using _q_method_type = void (ParentWindow::*)(QList<DataSet*> );
+            using _q_method_type = void (ParentWindow::*)(QList<std::shared_ptr<DataSet>> );
             if (_q_method_type _q_method = &ParentWindow::sendAllDataSets_SIGNAL; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
@@ -249,14 +249,14 @@ int ParentWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ParentWindow::PlotXYData_SIGNAL(DataSet * _t1)
+void ParentWindow::PlotXYData_SIGNAL(std::shared_ptr<DataSet> _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
-void ParentWindow::sendAllDataSets_SIGNAL(QList<DataSet*> _t1)
+void ParentWindow::sendAllDataSets_SIGNAL(QList<std::shared_ptr<DataSet>> _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

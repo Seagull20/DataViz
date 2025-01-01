@@ -32,42 +32,14 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>50</x>
      <y>100</y>
-     <width>190</width>
-     <height>73</height>
+     <width>291</width>
+     <height>67</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Select Reference Dataset:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="Y_comboBox"/>
-      </item>
-     </layout>
-    </item>
-    <item row="3" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Interpolation Type:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="Interpolation_comboBox"/>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QLabel" name="label">
@@ -76,10 +48,38 @@
         </property>
        </widget>
       </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QComboBox" name="X_comboBox"/>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Select Reference Dataset:</string>
+        </property>
+       </widget>
       </item>
      </layout>
+    </item>
+    <item row="2" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Interpolation Type:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="Y_comboBox"/>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="X_comboBox"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="QComboBox" name="Interpolation_comboBox"/>
     </item>
    </layout>
   </widget>

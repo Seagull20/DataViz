@@ -40,7 +40,7 @@ static constexpr auto qt_meta_stringdata_ZN13DataSetWindowE = QtMocHelpers::stri
     "DataSetWindow",
     "Plot_XYPlot_SIGNAL",
     "",
-    "DataSet*",
+    "std::shared_ptr<DataSet>",
     "ptr",
     "Open_HistPlotDialog_SIGNAL",
     "DisplayedDataSet",
@@ -50,7 +50,7 @@ static constexpr auto qt_meta_stringdata_ZN13DataSetWindowE = QtMocHelpers::stri
     "Open_HistPlotDialog",
     "displayChangeDataSetNameDialog",
     "receiveNewDataSetName",
-    "QString*",
+    "std::shared_ptr<QString>",
     "receiveNewDataSetDescription"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
@@ -110,13 +110,13 @@ Q_CONSTINIT const QMetaObject DataSetWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<DataSetWindow, std::true_type>,
         // method 'Plot_XYPlot_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         // method 'Open_HistPlotDialog_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         // method 'deleteDataSet_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         // method 'refreshPlottingActions_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'SendXYDataSetToPlot'
@@ -127,10 +127,10 @@ Q_CONSTINIT const QMetaObject DataSetWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'receiveNewDataSetName'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<QString>, std::false_type>,
         // method 'receiveNewDataSetDescription'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString *, std::false_type>
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<QString>, std::false_type>
     >,
     nullptr
 } };
@@ -140,36 +140,36 @@ void DataSetWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     auto *_t = static_cast<DataSetWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->Plot_XYPlot_SIGNAL((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
-        case 1: _t->Open_HistPlotDialog_SIGNAL((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
-        case 2: _t->deleteDataSet_SIGNAL((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
+        case 0: _t->Plot_XYPlot_SIGNAL((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1]))); break;
+        case 1: _t->Open_HistPlotDialog_SIGNAL((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1]))); break;
+        case 2: _t->deleteDataSet_SIGNAL((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1]))); break;
         case 3: _t->refreshPlottingActions_SIGNAL(); break;
         case 4: _t->SendXYDataSetToPlot(); break;
         case 5: _t->Open_HistPlotDialog(); break;
         case 6: _t->displayChangeDataSetNameDialog(); break;
-        case 7: _t->receiveNewDataSetName((*reinterpret_cast< std::add_pointer_t<QString*>>(_a[1]))); break;
-        case 8: _t->receiveNewDataSetDescription((*reinterpret_cast< std::add_pointer_t<QString*>>(_a[1]))); break;
+        case 7: _t->receiveNewDataSetName((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<QString>>>(_a[1]))); break;
+        case 8: _t->receiveNewDataSetDescription((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<QString>>>(_a[1]))); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _q_method_type = void (DataSetWindow::*)(DataSet * );
+            using _q_method_type = void (DataSetWindow::*)(std::shared_ptr<DataSet> );
             if (_q_method_type _q_method = &DataSetWindow::Plot_XYPlot_SIGNAL; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
         }
         {
-            using _q_method_type = void (DataSetWindow::*)(DataSet * );
+            using _q_method_type = void (DataSetWindow::*)(std::shared_ptr<DataSet> );
             if (_q_method_type _q_method = &DataSetWindow::Open_HistPlotDialog_SIGNAL; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
             }
         }
         {
-            using _q_method_type = void (DataSetWindow::*)(DataSet * );
+            using _q_method_type = void (DataSetWindow::*)(std::shared_ptr<DataSet> );
             if (_q_method_type _q_method = &DataSetWindow::deleteDataSet_SIGNAL; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 2;
                 return;
@@ -217,21 +217,21 @@ int DataSetWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void DataSetWindow::Plot_XYPlot_SIGNAL(DataSet * _t1)
+void DataSetWindow::Plot_XYPlot_SIGNAL(std::shared_ptr<DataSet> _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
-void DataSetWindow::Open_HistPlotDialog_SIGNAL(DataSet * _t1)
+void DataSetWindow::Open_HistPlotDialog_SIGNAL(std::shared_ptr<DataSet> _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 
 // SIGNAL 2
-void DataSetWindow::deleteDataSet_SIGNAL(DataSet * _t1)
+void DataSetWindow::deleteDataSet_SIGNAL(std::shared_ptr<DataSet> _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);

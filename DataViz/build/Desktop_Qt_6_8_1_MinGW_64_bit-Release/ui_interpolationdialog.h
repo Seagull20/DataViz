@@ -15,7 +15,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
@@ -27,16 +27,16 @@ class Ui_interpolationDialog
 public:
     QDialogButtonBox *buttonBox;
     QWidget *widget;
-    QGridLayout *gridLayout;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *label_3;
-    QComboBox *Y_comboBox;
-    QHBoxLayout *horizontalLayout_3;
-    QLabel *label_2;
-    QComboBox *Interpolation_comboBox;
+    QFormLayout *formLayout;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label_3;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *label_2;
+    QComboBox *Y_comboBox;
     QComboBox *X_comboBox;
+    QComboBox *Interpolation_comboBox;
 
     void setupUi(QDialog *interpolationDialog)
     {
@@ -50,10 +50,20 @@ public:
         buttonBox->setStandardButtons(QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok);
         widget = new QWidget(interpolationDialog);
         widget->setObjectName("widget");
-        widget->setGeometry(QRect(110, 100, 190, 73));
-        gridLayout = new QGridLayout(widget);
-        gridLayout->setObjectName("gridLayout");
-        gridLayout->setContentsMargins(0, 0, 0, 0);
+        widget->setGeometry(QRect(50, 100, 291, 67));
+        formLayout = new QFormLayout(widget);
+        formLayout->setObjectName("formLayout");
+        formLayout->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName("horizontalLayout");
+        label = new QLabel(widget);
+        label->setObjectName("label");
+
+        horizontalLayout->addWidget(label);
+
+
+        formLayout->setLayout(0, QFormLayout::LabelRole, horizontalLayout);
+
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
         label_3 = new QLabel(widget);
@@ -61,13 +71,8 @@ public:
 
         horizontalLayout_2->addWidget(label_3);
 
-        Y_comboBox = new QComboBox(widget);
-        Y_comboBox->setObjectName("Y_comboBox");
 
-        horizontalLayout_2->addWidget(Y_comboBox);
-
-
-        gridLayout->addLayout(horizontalLayout_2, 2, 0, 1, 1);
+        formLayout->setLayout(1, QFormLayout::LabelRole, horizontalLayout_2);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName("horizontalLayout_3");
@@ -76,28 +81,23 @@ public:
 
         horizontalLayout_3->addWidget(label_2);
 
-        Interpolation_comboBox = new QComboBox(widget);
-        Interpolation_comboBox->setObjectName("Interpolation_comboBox");
 
-        horizontalLayout_3->addWidget(Interpolation_comboBox);
+        formLayout->setLayout(2, QFormLayout::LabelRole, horizontalLayout_3);
 
+        Y_comboBox = new QComboBox(widget);
+        Y_comboBox->setObjectName("Y_comboBox");
 
-        gridLayout->addLayout(horizontalLayout_3, 3, 0, 1, 1);
-
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName("horizontalLayout");
-        label = new QLabel(widget);
-        label->setObjectName("label");
-
-        horizontalLayout->addWidget(label);
+        formLayout->setWidget(1, QFormLayout::FieldRole, Y_comboBox);
 
         X_comboBox = new QComboBox(widget);
         X_comboBox->setObjectName("X_comboBox");
 
-        horizontalLayout->addWidget(X_comboBox);
+        formLayout->setWidget(0, QFormLayout::FieldRole, X_comboBox);
 
+        Interpolation_comboBox = new QComboBox(widget);
+        Interpolation_comboBox->setObjectName("Interpolation_comboBox");
 
-        gridLayout->addLayout(horizontalLayout, 1, 0, 1, 1);
+        formLayout->setWidget(2, QFormLayout::FieldRole, Interpolation_comboBox);
 
 
         retranslateUi(interpolationDialog);
@@ -110,9 +110,9 @@ public:
     void retranslateUi(QDialog *interpolationDialog)
     {
         interpolationDialog->setWindowTitle(QCoreApplication::translate("interpolationDialog", "Dialog", nullptr));
+        label->setText(QCoreApplication::translate("interpolationDialog", "Select Interpolated Dataset :", nullptr));
         label_3->setText(QCoreApplication::translate("interpolationDialog", "Select Reference Dataset:", nullptr));
         label_2->setText(QCoreApplication::translate("interpolationDialog", "Interpolation Type:", nullptr));
-        label->setText(QCoreApplication::translate("interpolationDialog", "Select Interpolated Dataset :", nullptr));
     } // retranslateUi
 
 };

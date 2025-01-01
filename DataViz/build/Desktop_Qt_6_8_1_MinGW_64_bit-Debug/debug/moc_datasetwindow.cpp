@@ -50,7 +50,7 @@ static constexpr auto qt_meta_stringdata_ZN13DataSetWindowE = QtMocHelpers::stri
     "Open_HistPlotDialog",
     "displayChangeDataSetNameDialog",
     "receiveNewDataSetName",
-    "QString*",
+    "std::shared_ptr<QString>",
     "receiveNewDataSetDescription"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
@@ -127,10 +127,10 @@ Q_CONSTINIT const QMetaObject DataSetWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'receiveNewDataSetName'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<QString>, std::false_type>,
         // method 'receiveNewDataSetDescription'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString *, std::false_type>
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<QString>, std::false_type>
     >,
     nullptr
 } };
@@ -147,8 +147,8 @@ void DataSetWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 4: _t->SendXYDataSetToPlot(); break;
         case 5: _t->Open_HistPlotDialog(); break;
         case 6: _t->displayChangeDataSetNameDialog(); break;
-        case 7: _t->receiveNewDataSetName((*reinterpret_cast< std::add_pointer_t<QString*>>(_a[1]))); break;
-        case 8: _t->receiveNewDataSetDescription((*reinterpret_cast< std::add_pointer_t<QString*>>(_a[1]))); break;
+        case 7: _t->receiveNewDataSetName((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<QString>>>(_a[1]))); break;
+        case 8: _t->receiveNewDataSetDescription((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<QString>>>(_a[1]))); break;
         default: ;
         }
     }

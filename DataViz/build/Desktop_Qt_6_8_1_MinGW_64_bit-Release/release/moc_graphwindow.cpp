@@ -58,10 +58,10 @@ static constexpr auto qt_meta_stringdata_ZN11GraphWindowE = QtMocHelpers::string
     "OpenPlotDataDialog",
     "openExportPlotDialog",
     "receiveAllDataSets",
-    "QList<DataSet*>",
+    "QList<std::shared_ptr<DataSet>>",
     "receivedDataSets",
     "receiveChosenDataSet",
-    "DataSet*",
+    "std::shared_ptr<DataSet>",
     "chosenDataSet",
     "setAxisLabels",
     "xLabel",
@@ -148,10 +148,10 @@ Q_CONSTINIT const QMetaObject GraphWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'receiveAllDataSets'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QList<DataSet*>, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QList<std::shared_ptr<DataSet>>, std::false_type>,
         // method 'receiveChosenDataSet'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         // method 'setAxisLabels'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
@@ -177,8 +177,8 @@ void GraphWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 3: _t->OpenGraphStyleDialog(); break;
         case 4: _t->OpenPlotDataDialog(); break;
         case 5: _t->openExportPlotDialog(); break;
-        case 6: _t->receiveAllDataSets((*reinterpret_cast< std::add_pointer_t<QList<DataSet*>>>(_a[1]))); break;
-        case 7: _t->receiveChosenDataSet((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
+        case 6: _t->receiveAllDataSets((*reinterpret_cast< std::add_pointer_t<QList<std::shared_ptr<DataSet>>>>(_a[1]))); break;
+        case 7: _t->receiveChosenDataSet((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1]))); break;
         case 8: _t->setAxisLabels((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
         case 9: _t->setRanges((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
         default: ;

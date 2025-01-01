@@ -40,7 +40,7 @@ static constexpr auto qt_meta_stringdata_ZN23PlotHistogramDataDialogE = QtMocHel
     "PlotHistogramDataDialog",
     "sendHistogramData_SIGNAL",
     "",
-    "DataSet*",
+    "std::shared_ptr<DataSet>",
     "dataSet",
     "numBins",
     "histPlotName",
@@ -92,7 +92,7 @@ Q_CONSTINIT const QMetaObject PlotHistogramDataDialog::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<PlotHistogramDataDialog, std::true_type>,
         // method 'sendHistogramData_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'on_buttonBox_accepted'
@@ -108,7 +108,7 @@ void PlotHistogramDataDialog::qt_static_metacall(QObject *_o, QMetaObject::Call 
     auto *_t = static_cast<PlotHistogramDataDialog *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->sendHistogramData_SIGNAL((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
+        case 0: _t->sendHistogramData_SIGNAL((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
         case 1: _t->on_buttonBox_accepted(); break;
         case 2: _t->on_buttonBox_rejected(); break;
         default: ;
@@ -117,7 +117,7 @@ void PlotHistogramDataDialog::qt_static_metacall(QObject *_o, QMetaObject::Call 
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _q_method_type = void (PlotHistogramDataDialog::*)(DataSet * , int , QString );
+            using _q_method_type = void (PlotHistogramDataDialog::*)(std::shared_ptr<DataSet> , int , QString );
             if (_q_method_type _q_method = &PlotHistogramDataDialog::sendHistogramData_SIGNAL; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -158,7 +158,7 @@ int PlotHistogramDataDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_
 }
 
 // SIGNAL 0
-void PlotHistogramDataDialog::sendHistogramData_SIGNAL(DataSet * _t1, int _t2, QString _t3)
+void PlotHistogramDataDialog::sendHistogramData_SIGNAL(std::shared_ptr<DataSet> _t1, int _t2, QString _t3)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

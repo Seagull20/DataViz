@@ -40,7 +40,7 @@ static constexpr auto qt_meta_stringdata_ZN14PlotDataDialogE = QtMocHelpers::str
     "PlotDataDialog",
     "sendChosenDataSet_SIGNAL",
     "",
-    "DataSet*",
+    "std::shared_ptr<DataSet>",
     "on_buttonBox_accepted",
     "on_buttonBox_rejected"
 );
@@ -89,7 +89,7 @@ Q_CONSTINIT const QMetaObject PlotDataDialog::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<PlotDataDialog, std::true_type>,
         // method 'sendChosenDataSet_SIGNAL'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<DataSet *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<DataSet>, std::false_type>,
         // method 'on_buttonBox_accepted'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_buttonBox_rejected'
@@ -103,7 +103,7 @@ void PlotDataDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     auto *_t = static_cast<PlotDataDialog *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->sendChosenDataSet_SIGNAL((*reinterpret_cast< std::add_pointer_t<DataSet*>>(_a[1]))); break;
+        case 0: _t->sendChosenDataSet_SIGNAL((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<DataSet>>>(_a[1]))); break;
         case 1: _t->on_buttonBox_accepted(); break;
         case 2: _t->on_buttonBox_rejected(); break;
         default: ;
@@ -112,7 +112,7 @@ void PlotDataDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _q_method_type = void (PlotDataDialog::*)(DataSet * );
+            using _q_method_type = void (PlotDataDialog::*)(std::shared_ptr<DataSet> );
             if (_q_method_type _q_method = &PlotDataDialog::sendChosenDataSet_SIGNAL; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -153,7 +153,7 @@ int PlotDataDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void PlotDataDialog::sendChosenDataSet_SIGNAL(DataSet * _t1)
+void PlotDataDialog::sendChosenDataSet_SIGNAL(std::shared_ptr<DataSet> _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
