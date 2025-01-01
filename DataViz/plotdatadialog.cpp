@@ -1,7 +1,7 @@
 #include "plotdatadialog.h"
 #include "ui_plotdatadialog.h"
 
-PlotDataDialog::PlotDataDialog(QList<DataSet*> dataSetList, QWidget *parent) :
+PlotDataDialog::PlotDataDialog(QList<std::shared_ptr<DataSet>> dataSetList, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlotDataDialog)
 {
@@ -10,12 +10,12 @@ PlotDataDialog::PlotDataDialog(QList<DataSet*> dataSetList, QWidget *parent) :
 
     AllDataSets = dataSetList;
 
-    foreach(DataSet* dataSet, dataSetList)
+    foreach(auto dataSet, dataSetList)
     {
         ui->dataSelectionBox->addItem(dataSet->getName());
     }
 
-    connect(this, SIGNAL(sendChosenDataSet_SIGNAL(DataSet*)), parent, SLOT(receiveChosenDataSet(DataSet*)));
+    connect(this, SIGNAL(sendChosenDataSet_SIGNAL(std::shared_ptr<DataSet>)), parent, SLOT(receiveChosenDataSet(std::shared_ptr<DataSet>)));
 }
 
 PlotDataDialog::~PlotDataDialog()
@@ -26,9 +26,9 @@ PlotDataDialog::~PlotDataDialog()
 void PlotDataDialog::on_buttonBox_accepted()
 {
     int index = ui->dataSelectionBox->currentIndex();
-    DataSet* selectedDataSet = AllDataSets[index];
+    //DataSet* selectedDataSet = AllDataSets[index];
 
-    emit sendChosenDataSet_SIGNAL(selectedDataSet);
+    emit sendChosenDataSet_SIGNAL(AllDataSets[index]);
 
     PlotDataDialog::close();
 }

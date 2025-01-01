@@ -30,12 +30,13 @@ class DataSetWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit DataSetWindow(DataSet* Datase,QWidget *parent = nullptr);
+    explicit DataSetWindow(std::shared_ptr<DataSet> Datase,QWidget *parent = nullptr);
     ~DataSetWindow();
     void contextMenuEvent(QContextMenuEvent *event);
     void ConstructContextMenu(QMenu *);
-    DataSet* getDisplayedDataSet();
 
+
+    std::shared_ptr<DataSet> getDisplayedDataSet() const;
 
 public slots:
     void SendXYDataSetToPlot(); // Local slot to forward a single to the parent window
@@ -46,15 +47,15 @@ public slots:
 
 
 signals:
-    void Plot_XYPlot_SIGNAL(DataSet *ptr); // A signal to tell the parent window that the user wants this DataSet to be plot
-    void Open_HistPlotDialog_SIGNAL(DataSet* DisplayedDataSet);
-    void deleteDataSet_SIGNAL(DataSet* DisplayedDataSet);
+    void Plot_XYPlot_SIGNAL(std::shared_ptr<DataSet> ptr); // A signal to tell the parent window that the user wants this DataSet to be plot
+    void Open_HistPlotDialog_SIGNAL(std::shared_ptr<DataSet> DisplayedDataSet);
+    void deleteDataSet_SIGNAL(std::shared_ptr<DataSet> DisplayedDataSet);
     void refreshPlottingActions_SIGNAL();
 
 private:
     Ui::DataSetWindow *ui;
 
-    DataSet *DisplayedDataSet=nullptr; // A Variable referring to dataset dislayed in the datasetwindow
+    std::shared_ptr<DataSet> DisplayedDataSet; // A Variable referring to dataset dislayed in the datasetwindow
 
     // List of actions in the app (defined in the code rather than the UI)
     QAction* XYPlot=new QAction("XY Plot", this);

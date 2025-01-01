@@ -1,7 +1,7 @@
 #include "datasetwindow.h"
 #include "ui_datasetwindow.h"
 
-DataSetWindow::DataSetWindow(DataSet* DataSet,QWidget *parent) :
+DataSetWindow::DataSetWindow(std::shared_ptr<DataSet> DataSet,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DataSetWindow)
 {// This is called when a dataset is to be plot in a table displayed in a mdisubwindow
@@ -26,17 +26,21 @@ DataSetWindow::DataSetWindow(DataSet* DataSet,QWidget *parent) :
     {
         ui->Table->insertRow(i); // Adds a new row to the table
 
-        double* ValuePtr=DataSet->getPoint(i);
-        QString x_value=QString::number(*ValuePtr);
-        QString y_value= QString::number(*(++ValuePtr));
+        auto ValuePtr = DataSet->getPoint(i);
+        if (ValuePtr != nullptr) {
+            QString x_value = QString::number(ValuePtr[0]);
+            QString y_value = QString::number(ValuePtr[1]);
 
+            // set X value
+            TableItem = new QTableWidgetItem(x_value, 0);
+            ui->Table->setItem(i, 0, TableItem);
 
-       TableItem=new  QTableWidgetItem(x_value,0); // Reading x coordinate
-       ui->Table->setItem(i,0,TableItem);// Setting the item in the first column to x
-
-
-       TableItem=new  QTableWidgetItem(y_value,0); // Reading y coordinate
-       ui->Table->setItem(i,1,TableItem);// Setting the item in the second column to y
+            // set Y value
+            TableItem = new QTableWidgetItem(y_value, 0);
+            ui->Table->setItem(i, 1, TableItem);
+        } else {
+            qDebug() << "Invalid data point at index" << i;
+        }
 
 
     }
@@ -64,14 +68,18 @@ DataSetWindow::DataSetWindow(DataSet* DataSet,QWidget *parent) :
 }
 
 DataSetWindow::~DataSetWindow()
-{ // This  function is called when the window is closed (used for cleanup)
-   emit deleteDataSet_SIGNAL(DisplayedDataSet);
+{ // This function is called when the window is closed (used for cleanup)
+    // Disconnect signals to prevent accessing invalid memory
+    disconnect(XYPlot, SIGNAL(triggered()), this, SLOT(SendXYDataSetToPlot()));
+    disconnect(HistPlot, SIGNAL(triggered()), this, SLOT(Open_HistPlotDialog()));
+    disconnect(actionEditDataSetInfo, SIGNAL(triggered()), this, SLOT(displayChangeDataSetNameDialog()));
+
+    emit deleteDataSet_SIGNAL(DisplayedDataSet);
 
     delete PlotSubMenu;
     delete ContextMenu;
     delete XYPlot;
     delete HistPlot;
-    delete DisplayedDataSet;
     delete ui;
 }
 
@@ -87,11 +95,6 @@ void DataSetWindow::ConstructContextMenu(QMenu *)
     PlotSubMenu->addAction(HistPlot);
     ContextMenu->addMenu(PlotSubMenu); // Add the submenus to the main menu
     ContextMenu->addAction(actionEditDataSetInfo);
-}
-
-DataSet *DataSetWindow::getDisplayedDataSet()
-{
-    return DisplayedDataSet;
 }
 
 
@@ -126,4 +129,9 @@ void DataSetWindow::receiveNewDataSetName(QString* name)
 void DataSetWindow::receiveNewDataSetDescription(QString * description)
 {
     DisplayedDataSet->setDescription(description);
+}
+
+std::shared_ptr<DataSet> DataSetWindow::getDisplayedDataSet() const
+{
+    return DisplayedDataSet;
 }

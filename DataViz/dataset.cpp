@@ -5,6 +5,11 @@
 int DataSet::DataSetCounter=0;
 
 
+gsl_matrix *DataSet::getMatrix() const
+{
+    return Matrix;
+}
+
 DataSet::DataSet(QString& FileName)
 { // constructing a DataSet from a file
 
@@ -94,7 +99,25 @@ DataSet::DataSet(QVector<QPointF> dataIn)
         DataSetCounter++;
         DataSetName = "D" + QString::number(DataSetCounter);
     }
+}
 
+DataSet::DataSet(gsl_matrix *inputMatrix)
+{
+    if(!(inputMatrix == nullptr)){
+        Matrix = inputMatrix;
+        NumberOfRows = (int)inputMatrix->size1;
+        DataSetCounter++;
+        DataSetName = "D" + QString::number(DataSetCounter);
+    }
+
+}
+
+DataSet::~DataSet()
+{
+    if (Matrix != nullptr) {
+        gsl_matrix_free(Matrix);
+        Matrix = nullptr;
+    }
 }
 
 int DataSet::Size()

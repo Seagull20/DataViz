@@ -22,7 +22,7 @@ ParentWindow::ParentWindow(QWidget *parent)
     ui->actionInterpolation->setEnabled(false);
 
     // connect signal and slot for plotting XY graph from main menu
-    connect(this, SIGNAL(PlotXYData_SIGNAL(DataSet*)), this, SLOT(GraphWindowToBePlotted(DataSet*)));
+    connect(this, SIGNAL(PlotXYData_SIGNAL(std::shared_ptr<DataSet>)), this, SLOT(GraphWindowToBePlotted(std::shared_ptr<DataSet>)));
 }
 
 ParentWindow::~ParentWindow()
@@ -55,7 +55,7 @@ void ParentWindow::OpenDataSet(QString* FileName)
 {// called when loading dataset or a new dataset has been created using 'Function' action
 
     // Creating a new dataset in the app
-    AddedDataSet= new DataSet(*FileName);
+    AddedDataSet=std::make_shared<DataSet>(*FileName);
     if (AddedDataSet->IsDataSetValid) // Making sure the dataset is only dealt with if it was loaded succsessfully
     {
 
@@ -68,18 +68,18 @@ void ParentWindow::OpenDataSet(QString* FileName)
         connect(actionXY_Plot, SIGNAL(triggered()), this, SLOT(PlotXYData()));
 
         // Create a subWindow for the loaded DataSet
-        AddedDataSetWindow=new DataSetWindow(AddedDataSet,this);
+        AddedDataSetWindow = new DataSetWindow(AddedDataSet,this);
         subWindow=ui->WindowsManager->addSubWindow(AddedDataSetWindow);
         AddedDataSetWindow->show(); // showing the new dataset window to the user (when it is added for the first time)
 
 
         // To enable the ParentWindow to plot the dataset when the user clicks on a plot option in the context menu
         // of an already displayed DataSetWindow
-        connect(AddedDataSetWindow,SIGNAL(Plot_XYPlot_SIGNAL(DataSet*)),this,SLOT(GraphWindowToBePlotted(DataSet*)));
-        connect(AddedDataSetWindow,SIGNAL(Open_HistPlotDialog_SIGNAL(DataSet*)),this,SLOT(OpenHistPlotDialog(DataSet*)));
+        connect(AddedDataSetWindow, SIGNAL(Plot_XYPlot_SIGNAL(std::shared_ptr<DataSet>)),this, SLOT(GraphWindowToBePlotted(std::shared_ptr<DataSet>)));
+        connect(AddedDataSetWindow, SIGNAL(Open_HistPlotDialog_SIGNAL(std::shared_ptr<DataSet>)),this, SLOT(OpenHistPlotDialog(std::shared_ptr<DataSet>)));
 
         // To remove a dataset when the dataset window is closed
-        connect(AddedDataSetWindow, SIGNAL(deleteDataSet_SIGNAL(DataSet*)), this, SLOT(deleteDataSet(DataSet*)));
+        connect(AddedDataSetWindow, SIGNAL(deleteDataSet_SIGNAL(std::shared_ptr<DataSet>)),this, SLOT(deleteDataSet(std::shared_ptr<DataSet>)));
 
         // Refresh the actions under 'Plot -> XY Plot' when dataset is renamed or deleted
         connect(AddedDataSetWindow, SIGNAL(refreshPlottingActions_SIGNAL()), this, SLOT(refreshPlottingActions()));
@@ -119,7 +119,7 @@ void ParentWindow::PlotXYData()
     }
 }
 
-void ParentWindow::GraphWindowToBePlotted(DataSet *ptr)
+void ParentWindow::GraphWindowToBePlotted(std::shared_ptr<DataSet> ptr)
 { // This function is a slot that is called when the parentwindow is to plot a dataset in from a datasetwindow
     GraphWindow *AddedGraphWindow=new GraphWindow(ptr, this);
     subWindow=ui->WindowsManager->addSubWindow(AddedGraphWindow);
@@ -155,7 +155,7 @@ void ParentWindow::on_actionFunction_triggered()
     //check if the new DataSet contains elements
     if(!Function_dlg->getResult().isEmpty()){
         // Create a new dataset from the computed expression
-        DataSet *AddedDataSet = new DataSet(Function_dlg->getResult());
+        AddedDataSet = std::make_shared<DataSet>(Function_dlg->getResult());
 
         AllDataSets.push_back(AddedDataSet); // Addding a pointer to the new dataset so that it can be accessed by the rest of the app
 
@@ -165,9 +165,9 @@ void ParentWindow::on_actionFunction_triggered()
         connect(actionXY_Plot, SIGNAL(triggered()), this, SLOT(PlotXYData()));
 
         // Create a subWindow for the loaded DataSet
-        AddedDataSetWindow=new DataSetWindow(AddedDataSet,this);
+        AddedDataSetWindow = new DataSetWindow(AddedDataSet,this);
         subWindow=ui->WindowsManager->addSubWindow(AddedDataSetWindow);
-        AddedDataSetWindow->show(); // showing the new dataset window to the user (when it is added for the first time)
+        AddedDataSetWindow->show();// showing the new dataset window to the user (when it is added for the first time)
     }else{
         this->displayErrorDialog(8); //this error showing no dataset found or empty Result returned
     }
@@ -176,11 +176,11 @@ void ParentWindow::on_actionFunction_triggered()
 
     // To enable the ParentWindow to plot the dataset when the user clicks on a plot option in the context menu
     // of an already displayed DataSetWindow
-    connect(AddedDataSetWindow,SIGNAL(Plot_XYPlot_SIGNAL(DataSet*)),this,SLOT(GraphWindowToBePlotted(DataSet*)));
-    connect(AddedDataSetWindow,SIGNAL(Open_HistPlotDialog_SIGNAL(DataSet*)),this,SLOT(OpenHistPlotDialog(DataSet*)));
+    connect(AddedDataSetWindow, SIGNAL(Plot_XYPlot_SIGNAL(std::shared_ptr<DataSet>)),this, SLOT(GraphWindowToBePlotted(std::shared_ptr<DataSet>)));
+    connect(AddedDataSetWindow, SIGNAL(Open_HistPlotDialog_SIGNAL(std::shared_ptr<DataSet>)),this, SLOT(OpenHistPlotDialog(std::shared_ptr<DataSet>)));
 
     // To remove a dataset when the dataset window is closed
-    connect(AddedDataSetWindow, SIGNAL(deleteDataSet_SIGNAL(DataSet*)), this, SLOT(deleteDataSet(DataSet*)));
+    connect(AddedDataSetWindow, SIGNAL(deleteDataSet_SIGNAL(std::shared_ptr<DataSet>)),this, SLOT(deleteDataSet(std::shared_ptr<DataSet>)));
 
     // Refresh the actions under 'Plot -> XY Plot' when dataset is renamed or deleted
     connect(AddedDataSetWindow, SIGNAL(refreshPlottingActions_SIGNAL()), this, SLOT(refreshPlottingActions()));
@@ -189,12 +189,10 @@ void ParentWindow::on_actionFunction_triggered()
     ui->menuXY_Plot->setEnabled(true);
     ui->actionHist_Plot->setEnabled(true);
 
-    delete AddedDataSet;
-
     delete Function_dlg;
 }
 
-void ParentWindow::OpenHistPlotDialog(DataSet* selectedDataSet)
+void ParentWindow::OpenHistPlotDialog(std::shared_ptr<DataSet> selectedDataSet)
 {// Called when Histogram dialog box is opened from context menu. Passes over the index of the dataset that was right-clicked
     int dataSetIndex = 0;
 
@@ -219,7 +217,7 @@ void ParentWindow::displayErrorDialog(int errCode)
     delete Error_dlg;
 }
 
-void ParentWindow::deleteDataSet(DataSet* dataSet)
+void ParentWindow::deleteDataSet(std::shared_ptr<DataSet> dataSet)
 {
     // cycle through all data sets to remove the deleted one
     for (int i = 0; i < AllDataSets.length(); i++)
@@ -227,13 +225,14 @@ void ParentWindow::deleteDataSet(DataSet* dataSet)
         if (AllDataSets[i] == dataSet)
         {
             AllDataSets.removeAt(i);
+            break;
         }
     }
 
     // disable menu actions if no datasets are left open
     if (AllDataSets.length() == 0)
     {
-        AddedDataSet = nullptr;
+        //AddedDataSet = nullptr;
         ui->menuXY_Plot->setEnabled(false);
         ui->actionHist_Plot->setEnabled(false);
         ui->actionFunction->setEnabled(false);
@@ -255,7 +254,7 @@ void ParentWindow::refreshPlottingActions()
     }
 
     // add back the actions for datasets that remain
-    foreach (DataSet* dataSet, AllDataSets)
+    foreach (auto dataSet, AllDataSets)
     {
         // XY plot actions
         actionXY_Plot = new QAction("Dataset \""+dataSet->getName()+"\"", this);
@@ -264,7 +263,7 @@ void ParentWindow::refreshPlottingActions()
     }
 }
 
-void ParentWindow::receiveHistogramData(DataSet* dataSet, int numBins, QString histPlotName)
+void ParentWindow::receiveHistogramData(std::shared_ptr<DataSet> dataSet, int numBins, QString histPlotName)
 {// when histogram data is receive, open a graph window to plot histogram
     GraphWindow *AddedGraphWindow=new GraphWindow(dataSet, numBins, histPlotName, this);
     subWindow=ui->WindowsManager->addSubWindow(AddedGraphWindow);
@@ -282,7 +281,33 @@ void ParentWindow::on_actionInterpolation_triggered()
 {
     interpolationDialog* interpolation_Dlg = new interpolationDialog(AllDataSets,this);
     interpolation_Dlg->exec();
+    if(!(interpolation_Dlg->getInterpolatedMatrix() == nullptr)){
+        AddedDataSet =std::make_shared<DataSet>(interpolation_Dlg->getInterpolatedMatrix());
+        AllDataSets.push_back(AddedDataSet);
 
+        // Main menu actions for plotting new dataset
+        actionXY_Plot = new QAction("Dataset \""+AddedDataSet->getName()+"\"", this);
+        ui->menuXY_Plot->addAction(actionXY_Plot);
+        connect(actionXY_Plot, SIGNAL(triggered()), this, SLOT(PlotXYData()));
+
+        // Create a subWindow for the loaded DataSet
+        AddedDataSetWindow = new DataSetWindow(AddedDataSet,this);
+        subWindow=ui->WindowsManager->addSubWindow(AddedDataSetWindow);
+        AddedDataSetWindow->show();
+
+        // To enable the ParentWindow to plot the dataset when the user clicks on a plot option in the context menu
+        // of an already displayed DataSetWindow
+        connect(AddedDataSetWindow, SIGNAL(Plot_XYPlot_SIGNAL(std::shared_ptr<DataSet>)),this, SLOT(GraphWindowToBePlotted(std::shared_ptr<DataSet>)));
+        connect(AddedDataSetWindow, SIGNAL(Open_HistPlotDialog_SIGNAL(std::shared_ptr<DataSet>)),this, SLOT(OpenHistPlotDialog(std::shared_ptr<DataSet>)));
+
+        // To remove a dataset when the dataset window is closed
+        connect(AddedDataSetWindow, SIGNAL(deleteDataSet_SIGNAL(std::shared_ptr<DataSet>)),this, SLOT(deleteDataSet(std::shared_ptr<DataSet>)));
+
+        // Refresh the actions under 'Plot -> XY Plot' when dataset is renamed or deleted
+        connect(AddedDataSetWindow, SIGNAL(refreshPlottingActions_SIGNAL()), this, SLOT(refreshPlottingActions()));
+    }else{
+        this->displayErrorDialog(8); //this error showing no dataset found or empty Result returned
+    }
     delete interpolation_Dlg;
 }
 

@@ -6,7 +6,7 @@ int GraphWindow::FigureCounter=0;
 
 
 // constructor that is being called when XY graph is being plotted
-GraphWindow::GraphWindow(DataSet *DataSet, QWidget *parent) :
+GraphWindow::GraphWindow(std::shared_ptr<DataSet> DataSet, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GraphWindow)
 {
@@ -35,11 +35,11 @@ GraphWindow::GraphWindow(DataSet *DataSet, QWidget *parent) :
 
     // connect signals and slots for accessing datasets
     connect(this, SIGNAL(requestAllDataSets_SIGNAL()), parent, SLOT(receiveAllDataSetsRequest()));
-    connect(parent, SIGNAL(sendAllDataSets_SIGNAL(QList<DataSet*>)), this, SLOT(receiveAllDataSets(QList<DataSet*>)));
+    connect(parent, SIGNAL(sendAllDataSets_SIGNAL(QList<std::shared_ptr<DataSet>>)), this, SLOT(receiveAllDataSets(QList<std::shared_ptr<DataSet>>)));
 }
 
 // constructor that is called when histogram is being plotted
-GraphWindow::GraphWindow(DataSet *DataSet, int numBins, QString histPlotName, QWidget *parent) :
+GraphWindow::GraphWindow(std::shared_ptr<DataSet> DataSet, int numBins, QString histPlotName, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GraphWindow)
 {
@@ -105,13 +105,13 @@ void GraphWindow::ConstructContextMenu(QMenu *)
     ContextMenu->addAction(actionExportPlot); //Add action to export plot
 }
 
-void GraphWindow::SetGraphSetting(DataSet *DataSet)
+void GraphWindow::SetGraphSetting(std::shared_ptr<DataSet> DataSet)
 { // Sets up the graph and plots it
     ui->customPlot->addGraph();
     int graphCount = ui->customPlot->graphCount();
 
     // graph(graphCount-1) is the graph that has just been added
-    ui->customPlot->graph(graphCount-1)->addData(DataSet);
+    ui->customPlot->graph(graphCount-1)->addData(DataSet.get());
     ui->customPlot->graph(graphCount-1)->setPen(QPen(Qt::blue));
     ui->customPlot->graph(graphCount-1)->setName(DataSet->getName());
     ui->customPlot->graph(graphCount-1)->rescaleAxes();
@@ -243,7 +243,7 @@ void GraphWindow::OpenGraphStyleDialog()
     delete GraphStyle_dlg;
 }
 
-void GraphWindow::receiveAllDataSets(QList<DataSet*> receivedDataSets)
+void GraphWindow::receiveAllDataSets(QList<std::shared_ptr<DataSet>> receivedDataSets)
 {
     AllDataSets = receivedDataSets;
 }
@@ -264,7 +264,7 @@ void GraphWindow::openExportPlotDialog()
     delete figureExport_dlg;
 }
 
-void GraphWindow::receiveChosenDataSet(DataSet* chosenDataSet)
+void GraphWindow::receiveChosenDataSet(std::shared_ptr<DataSet> chosenDataSet)
 {
 
     SetGraphSetting(chosenDataSet);
@@ -354,7 +354,7 @@ void GraphWindow::ChangeGraphStyle(QCPGraph * graph, QPen * pen)
     ui->customPlot->replot();
 }
 
-QVector<double>* GraphWindow::extractHistDataFromDataSet(DataSet* dataSet)
+QVector<double>* GraphWindow::extractHistDataFromDataSet(std::shared_ptr<DataSet> dataSet)
 {
     QVector<double>* data = new QVector<double>;
     for (int i = 0; i < dataSet->Size(); i++)

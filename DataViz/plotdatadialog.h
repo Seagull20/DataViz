@@ -23,12 +23,12 @@ class PlotDataDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PlotDataDialog(QList<DataSet*> AllDataSets, QWidget *parent = nullptr);
+    explicit PlotDataDialog(QList<std::shared_ptr<DataSet> > AllDataSets, QWidget *parent = nullptr);
     ~PlotDataDialog();
 
 private:
     Ui::PlotDataDialog *ui;
-    QList<DataSet*> AllDataSets;
+    QList<std::shared_ptr<DataSet>> AllDataSets;
 
 private slots:
     void on_buttonBox_accepted();
@@ -36,7 +36,7 @@ private slots:
     void on_buttonBox_rejected();
 
 signals:
-    void sendChosenDataSet_SIGNAL(DataSet*);
+    void sendChosenDataSet_SIGNAL(std::shared_ptr<DataSet>);
 };
 
 #endif // PLOTDATADIALOG_H

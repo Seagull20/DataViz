@@ -2,7 +2,7 @@
 #include "ui_plothistogramdatadialog.h"
 
 // constructor for when called through ParentWindow menu (allow access to all datasets)
-PlotHistogramDataDialog::PlotHistogramDataDialog(QList<DataSet*> dataSetList, QWidget *parent) :
+PlotHistogramDataDialog::PlotHistogramDataDialog(QList<std::shared_ptr<DataSet>> dataSetList, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlotHistogramDataDialog)
 {
@@ -11,7 +11,7 @@ PlotHistogramDataDialog::PlotHistogramDataDialog(QList<DataSet*> dataSetList, QW
     allDataSets = dataSetList;
 
     // populate the dataset combination box
-    foreach(DataSet* dataSet, allDataSets)
+    foreach(auto dataSet, allDataSets)
     {
         ui->dataSelectionBox->addItem(dataSet->getName());
     }
@@ -21,7 +21,7 @@ PlotHistogramDataDialog::PlotHistogramDataDialog(QList<DataSet*> dataSetList, QW
     connect(this, SIGNAL(sendHistogramData_SIGNAL(DataSet*, int, QString)), parent, SLOT(receiveHistogramData(DataSet*, int, QString)));
 }
 
-PlotHistogramDataDialog::PlotHistogramDataDialog(QList<DataSet*> dataSetList, int defaultDataSetIndex, QWidget *parent) :
+PlotHistogramDataDialog::PlotHistogramDataDialog(QList<std::shared_ptr<DataSet>> dataSetList, int defaultDataSetIndex, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlotHistogramDataDialog)
 {
@@ -30,7 +30,7 @@ PlotHistogramDataDialog::PlotHistogramDataDialog(QList<DataSet*> dataSetList, in
     allDataSets = dataSetList;
 
     // populate the dataset combination box
-    foreach(DataSet* dataSet, allDataSets)
+    foreach(auto dataSet, allDataSets)
     {
         ui->dataSelectionBox->addItem(dataSet->getName());
     }
@@ -49,7 +49,7 @@ PlotHistogramDataDialog::~PlotHistogramDataDialog()
 
 void PlotHistogramDataDialog::on_buttonBox_accepted()
 {
-    DataSet* selectedDataSet;
+    std::shared_ptr<DataSet> selectedDataSet;
     int dataSetIndex = ui->dataSelectionBox->currentIndex();
     selectedDataSet = allDataSets[dataSetIndex];
 
@@ -59,7 +59,7 @@ void PlotHistogramDataDialog::on_buttonBox_accepted()
             int errCode = 5;
             throw errCode;
         }
-        else if (ui->numBinsInput->text().toInt() == NULL)
+        else if (ui->numBinsInput->text().toInt() == 0)
         { // error: no value for number of bins has been entered
             int errCode = 6;
             throw errCode;

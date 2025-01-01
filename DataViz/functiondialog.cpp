@@ -1,7 +1,7 @@
 #include "functiondialog.h"
 #include "ui_functiondialog.h"
 
-FunctionDialog::FunctionDialog(QList<DataSet *> list,QWidget *parent) :
+FunctionDialog::FunctionDialog(QList<std::shared_ptr<DataSet>> list,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FunctionDialog)
 {
@@ -35,7 +35,7 @@ QVector<QString> FunctionDialog::findDataSets(QString expression)
     }
 
     // Iterate through all datasets
-    for (DataSet* dataSet : dataBases)
+    for (auto dataSet : dataBases)
     {
         if (dataSet) // Ensure the dataset is valid
         {
@@ -188,7 +188,7 @@ QString FunctionDialog::generateVar(QVector<QString> databaseNames)
     return var; // Return the formatted string.
 }
 // Obtain all datapoints from a given dataset.
-QVector<QPointF> FunctionDialog::getDataSet(QString name, QList<DataSet *> list)
+QVector<QPointF> FunctionDialog::getDataSet(QString name, QList<std::shared_ptr<DataSet> > list)
 {
     double *pPoint = nullptr;
     QPointF xyPoint;

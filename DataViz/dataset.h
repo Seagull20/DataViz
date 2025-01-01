@@ -22,7 +22,6 @@
 
 class DataSet
 {
-
 private:
     int NumberOfRows=0; // Assuming that a datset only has two columns
     double DataPoint[2]; // An array containing the information of 2 datapoints
@@ -34,6 +33,8 @@ private:
 public:
     DataSet(QString& FileName); // Create a new dataset by loading a file
     DataSet(QVector<QPointF> dataIn); // Creating a new dataset by function evaluation
+    DataSet(gsl_matrix* inputMatrix);
+    ~DataSet();
     int Size(); // function to get the size of the dataset (currenlty the number of rows only)
     QString getName(); // Function to get the name of the dataset
     void setName(QString* name);
@@ -44,6 +45,7 @@ public:
 
     bool IsDataSetValid=true; // Used to detect and handle error subsquently
 
+    gsl_matrix *getMatrix() const;
 };
 
 #endif // DATASET_H

@@ -12,8 +12,9 @@ class interpolationDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit interpolationDialog(QList<DataSet*> datasets,QWidget *parent = nullptr);
+    explicit interpolationDialog(QList<std::shared_ptr<DataSet>> datasets,QWidget *parent = nullptr);
     ~interpolationDialog();
+
 
     gsl_matrix *getInterpolatedMatrix() const;
 
@@ -23,8 +24,8 @@ private slots:
 private:
     Ui::interpolationDialog *ui;
 
-    QList<DataSet*> availableDatasets;
-    gsl_matrix *interpolatedMatrix = nullptr;
+    QList<std::shared_ptr<DataSet>> availableDatasets;
+    gsl_matrix *interpolatedMatrix;
 };
 
 #endif // INTERPOLATIONDIALOG_H

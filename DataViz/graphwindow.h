@@ -36,14 +36,14 @@ class GraphWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit GraphWindow(DataSet *DataSet, QWidget *parent = nullptr);
-    explicit GraphWindow(DataSet *DataSet, int numBins, QString histPlotName, QWidget *parent = nullptr);
+    explicit GraphWindow(std::shared_ptr<DataSet> DataSet, QWidget *parent = nullptr);
+    explicit GraphWindow(std::shared_ptr<DataSet> DataSet, int numBins, QString histPlotName, QWidget *parent = nullptr);
     ~GraphWindow();
 
 
-    void SetGraphSetting(DataSet *DataSet); // Function to control the setting of the curve (dataset represenation in the figure)
+    void SetGraphSetting(std::shared_ptr<DataSet> DataSet); // Function to control the setting of the curve (dataset represenation in the figure)
     void SetHistogramSetting(QVector<double>* data, int numBins, QString histPlotName);
-    QVector<double>* extractHistDataFromDataSet(DataSet* dataSet);
+    QVector<double>* extractHistDataFromDataSet(std::shared_ptr<DataSet> dataSet);
     void SetFigureSetting(); // Function to control the setting of the figure itself
     void getXRnage(QString &upper,QString &lower);
     void getYRnage(QString &upper,QString &lower);
@@ -55,8 +55,8 @@ public:
 
 private:
     Ui::GraphWindow *ui;
-    QList<DataSet*> AllDataSets;
-    DataSet* curretDataset;
+    QList<std::shared_ptr<DataSet>> AllDataSets;
+    std::shared_ptr<DataSet> curretDataset;
     // context menu
     QMenu *ContextMenu=new QMenu(this);
 
@@ -79,8 +79,8 @@ private slots:
     void OpenGraphStyleDialog();
     void OpenPlotDataDialog();
     void openExportPlotDialog();
-    void receiveAllDataSets(QList<DataSet*> receivedDataSets);
-    void receiveChosenDataSet(DataSet* chosenDataSet);
+    void receiveAllDataSets(QList<std::shared_ptr<DataSet>> receivedDataSets);
+    void receiveChosenDataSet(std::shared_ptr<DataSet> chosenDataSet);
     void setAxisLabels(const QString &xLabel, const QString &yLabel);
     void setRanges(const QString &xLeftRange,const QString &xRightRange,const QString &yLeftRange,const QString &yRightRange);
 

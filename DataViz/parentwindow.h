@@ -48,16 +48,16 @@ public:
 
 private slots:
     void on_actionLoad_Dataset_triggered();
-    void GraphWindowToBePlotted(DataSet *ptr); // A slot to plot a new graph window
+    void GraphWindowToBePlotted(std::shared_ptr<DataSet> ptr); // A slot to plot a new graph window
     void on_actionAbout_triggered();
     void on_actionHelp_triggered();
     void on_actionHist_Plot_triggered();
     void PlotXYData();
     void receiveAllDataSetsRequest();
-    void deleteDataSet(DataSet*);
+    void deleteDataSet(std::shared_ptr<DataSet>);
     void refreshPlottingActions();
-    void receiveHistogramData(DataSet* dataSet, int numBins, QString histPlotName);
-    void OpenHistPlotDialog(DataSet* selectedDataSet);
+    void receiveHistogramData(std::shared_ptr<DataSet> dataSet, int numBins, QString histPlotName);
+    void OpenHistPlotDialog(std::shared_ptr<DataSet> selectedDataSet);
 
     void on_actionFunction_triggered();
 
@@ -65,8 +65,8 @@ private slots:
     void on_actionInterpolation_triggered();
 
 signals:
-    void PlotXYData_SIGNAL(DataSet* ptr);
-    void sendAllDataSets_SIGNAL(QList<DataSet*> list);
+    void PlotXYData_SIGNAL(std::shared_ptr<DataSet> ptr);
+    void sendAllDataSets_SIGNAL(QList<std::shared_ptr<DataSet>> list);
 
 private:
     Ui::ParentWindow *ui;
@@ -75,10 +75,10 @@ private:
     void SaveFunctionDataToFile(QVector<double> *dataVector);
 
 
-    QList<DataSet*> AllDataSets; // A List of all datasets loaded in the app
+    QList<std::shared_ptr<DataSet>> AllDataSets; // A List of all datasets loaded in the app
     QMdiSubWindow* subWindow=nullptr; // Temporary variable for subwindows (whether datasetwindow or graphwindow)
-    DataSet *AddedDataSet=nullptr; // Temporary variable for dataset (usally has the latest added dataset)
-    DataSetWindow *AddedDataSetWindow=nullptr;// Temporary variable for datasetwindow (usually has the latest created datasetwidnow)
+    std::shared_ptr<DataSet>AddedDataSet; // Temporary variable for dataset (usally has the latest added dataset)
+    DataSetWindow* AddedDataSetWindow = nullptr;;// Temporary variable for datasetwindow (usually has the latest created datasetwidnow)
     QAction * actionXY_Plot = nullptr;
     QString functionExpression;
 
