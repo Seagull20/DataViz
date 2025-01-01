@@ -105,7 +105,7 @@ DataSet::DataSet(gsl_matrix *inputMatrix)
 {
     if(!(inputMatrix == nullptr)){
         Matrix = inputMatrix;
-        NumberOfRows = (int)inputMatrix->size1;
+        NumberOfRows = (int)Matrix->size1;
         DataSetCounter++;
         DataSetName = "D" + QString::number(DataSetCounter);
     }

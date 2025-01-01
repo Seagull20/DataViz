@@ -4,6 +4,7 @@
 #include <gsl/gsl_spline.h>
 #include <QMessageBox>
 
+
 interpolationDialog::interpolationDialog(QList<std::shared_ptr<DataSet>> datasets,QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::interpolationDialog)
@@ -39,6 +40,8 @@ void interpolationDialog::on_buttonBox_accepted()
 {
     int xIndex = ui->X_comboBox->currentIndex();
     int yIndex = ui->Y_comboBox->currentIndex();
+    const gsl_interp_type* interpType = ui->Interpolation_comboBox->currentData().value<const gsl_interp_type*>();
+
 
     if (xIndex < 0 || yIndex < 0 || xIndex == yIndex) {
         qDebug() << "Invalid dataset selection!";
@@ -52,29 +55,62 @@ void interpolationDialog::on_buttonBox_accepted()
     gsl_vector_view yValues = gsl_matrix_column(xDataset->getMatrix(), 1);
     gsl_vector_view newXValues = gsl_matrix_column(yDataset->getMatrix(),0);
 
-    for (size_t i = 1; i < xValues.vector.size; ++i) {
-        if (gsl_vector_get(&xValues.vector, i) <= gsl_vector_get(&xValues.vector, i - 1)) {
-            QMessageBox::critical(this, "Interpolation Error", "X values must be monotonically increasing.");
+    //ensure all x point is inside of reference dataset
+    double x_min = gsl_vector_get(&xValues.vector, 0);
+    double x_max = gsl_vector_get(&xValues.vector, xValues.vector.size - 1);
+    for (size_t i = 0; i < newXValues.vector.size; ++i) {
+        double x = gsl_vector_get(&newXValues.vector, i);
+        if (x < x_min || x > x_max) {
+            QMessageBox::critical(this, "Interpolation Error", "Interpolation point out of range.");
+            reject();
             return;
         }
     }
 
-    //TO DO:check if the points is enough
+    //ensure # of datapoint is sufficient to specific interpolation type
+    QList<size_t> sizes ={xValues.vector.size,yValues.vector.size,newXValues.vector.size};
+    unsigned int minSize = gsl_interp_type_min_size(interpType);
+    foreach (auto size, sizes) {
+        if (size < static_cast<size_t>(minSize)) {
+            QMessageBox::critical(this,"Interpolation Error","Size is smaller than the minimum size required by the interpolation type.\n");
+            reject();
+            return;
+        }
+    }
 
-    gsl_interp *interp = gsl_interp_alloc(gsl_interp_linear, xValues.vector.size);
+
+    //monotonically increasing testing
+    for (size_t i = 1; i < xValues.vector.size; ++i) {
+        if (gsl_vector_get(&xValues.vector, i) <= gsl_vector_get(&xValues.vector, i - 1)) {
+            QMessageBox::critical(this, "Interpolation Error", "X values must be monotonically increasing.");
+            reject();
+            return;
+        }
+    }
+
+
+    gsl_interp *interp = gsl_interp_alloc(interpType, xValues.vector.size);
     gsl_interp_accel *acc = gsl_interp_accel_alloc();
-    double* array = new double[xDataset->getMatrix()->size1];
 
+
+    //Though the content of xValues.vector.data and array are same, gls_interp_init only accept array while xValues will leads to error
+    double* array = new double[xDataset->getMatrix()->size1];
     for (size_t i = 0; i < xDataset->getMatrix()->size1; ++i) {
         array[i] = gsl_matrix_get(xDataset->getMatrix(), i, 0);
     }
-    gsl_interp_init(interp, xValues.vector.data, yValues.vector.data, xValues.vector.size);
+    gsl_interp_init(interp, array, yValues.vector.data, xValues.vector.size);
 
     interpolatedMatrix = gsl_matrix_alloc(newXValues.vector.size, 2);
 
     for (size_t i = 0; i < newXValues.vector.size; ++i) {
         double x = gsl_vector_get(&newXValues.vector,i);
-        double y = gsl_interp_eval(interp, xValues.vector.data, yValues.vector.data, x, acc);
+        double y ;
+        int status = gsl_interp_eval_e(interp, xValues.vector.data, yValues.vector.data, x, acc, &y);
+        if (status != GSL_SUCCESS) {
+            QMessageBox::critical(this, "Interpolation Error", gsl_strerror(status));
+            return;
+        }
+
 
         gsl_matrix_set(interpolatedMatrix, i, 0, x);
         gsl_matrix_set(interpolatedMatrix, i, 1, y);
@@ -90,5 +126,11 @@ void interpolationDialog::on_buttonBox_accepted()
 gsl_matrix *interpolationDialog::getInterpolatedMatrix() const
 {
     return interpolatedMatrix;
+}
+
+
+void interpolationDialog::on_buttonBox_rejected()
+{
+    reject();
 }
 

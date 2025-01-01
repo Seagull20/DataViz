@@ -21,11 +21,13 @@ public:
 private slots:
     void on_buttonBox_accepted();
 
+    void on_buttonBox_rejected();
+
 private:
     Ui::interpolationDialog *ui;
 
     QList<std::shared_ptr<DataSet>> availableDatasets;
-    gsl_matrix *interpolatedMatrix;
+    gsl_matrix *interpolatedMatrix =nullptr;
 };
 
 #endif // INTERPOLATIONDIALOG_H

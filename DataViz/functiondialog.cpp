@@ -59,6 +59,7 @@ QVector<QPointF> FunctionDialog::getResult()
 
 void FunctionDialog::on_buttonBox_rejected()
 {
+    reject();
     FunctionDialog::close();
 }
 

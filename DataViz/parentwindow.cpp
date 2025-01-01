@@ -150,7 +150,10 @@ void ParentWindow::on_actionHist_Plot_triggered()
 void ParentWindow::on_actionFunction_triggered()
 {// This function is called when the user clicks on "Function" option under "Analysis" menu
     FunctionDialog* Function_dlg=new FunctionDialog(AllDataSets,this);
-    Function_dlg->exec();
+    if(Function_dlg->exec() == QDialog::Rejected){
+        delete Function_dlg;
+        return;
+    }
 
     //check if the new DataSet contains elements
     if(!Function_dlg->getResult().isEmpty()){
@@ -280,7 +283,10 @@ void ParentWindow::SaveFunctionDataToFile(QVector<double>* dataVector)
 void ParentWindow::on_actionInterpolation_triggered()
 {
     interpolationDialog* interpolation_Dlg = new interpolationDialog(AllDataSets,this);
-    interpolation_Dlg->exec();
+    if (interpolation_Dlg->exec() == QDialog::Rejected) {
+        delete interpolation_Dlg;
+        return;
+    }
     if(!(interpolation_Dlg->getInterpolatedMatrix() == nullptr)){
         AddedDataSet =std::make_shared<DataSet>(interpolation_Dlg->getInterpolatedMatrix());
         AllDataSets.push_back(AddedDataSet);
